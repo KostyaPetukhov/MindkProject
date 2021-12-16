@@ -4,19 +4,22 @@
   "description": "api part in MindkProject",
   "main": "index.js",
   "scripts": {
-    "start": "react-scripts start",
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "eslint ./src",
+    "dev": "node -r dotenv/config ./src/app.js",
     "prepare": "cd .. && husky install api/.husky"
   },
   "author": "Kostya Petukhov",
   "license": "ISC",
   "dependencies": {
     "dotenv": "^10.0.0",
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "nodemon": "^2.0.15"
   },
   "lint-staged": {
-    "*.(js|jsx)": ["npm run lint"]
+    "*.(js|jsx)": [
+      "eslint"
+    ]
   },
   "devDependencies": {
     "eslint": "^8.4.1",
