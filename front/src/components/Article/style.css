@@ -1,0 +1,25 @@
+.articleInSocialNetwork {
+	display: flex;
+	flex-direction: column;
+	width: 500px;
+	margin: 30px auto;
+}
+.name {
+	font-size: 22px;
+	font-weight: bold;
+	text-align: right;
+	margin: 2px;
+}
+.date {
+	font-size: 14px;
+	font-weight: 400;
+	text-align: right;
+	margin: 2px;
+}
+
+.content {
+	font-size: 24px;
+	font-weight: 600;
+	text-align: left;
+	margin: 10px;
+}

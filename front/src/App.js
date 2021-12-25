@@ -1,23 +1,18 @@
-import PostContainer from './containers/Post';
+import Header from './containers/Header';
+import Body from './containers/Body';
 
-import logo from './logo.svg';
 import './App.css';
+import { useState } from 'react';
 
 function App() {
-    return (
-        <div className='App'>
-            <header className='App-header'>
-                <img src={logo} className='App-logo' alt='logo' />
-                <PostContainer
-                    firstName='Ivan'
-                    lastName='Petrov'
-                    date='12.02.2021'
-                    time='17:43'
-                    content='Nice weather today! Its really good day!'
-                />
-            </header>
-        </div>
-    );
+	const [activePage, setActivePage] = useState('profile');
+
+	return (
+		<div className='App'>
+			<Header setActivePage={setActivePage} />
+			<Body activePage={activePage} />
+		</div>
+	);
 }
 
 export default App;
