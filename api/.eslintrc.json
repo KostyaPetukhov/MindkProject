@@ -1,27 +1,24 @@
 {
-    "env": {
-        "browser": true,
-        "es2021": true,
-        "node": true
-    },
-    "extends": [
-        "eslint:recommended",
-        "prettier"
-    ],
-    "parserOptions": {
-        "ecmaFeatures": {
-            "jsx": true
-        },
-        "ecmaVersion": 2015,
-        "sourceType": "module"
-    },
-    "rules": {
-        "jsx-quotes": [
-        1,
-        "prefer-double"
-      ]
-    },
-    "plugins": [
-        "prettier"
-      ]
+  "parser": "babel-eslint",
+  "rules": {
+    "new-cap": 0,
+    "semi": "off",
+    "max-len": ["error", 120, {"ignoreUrls": true}],
+    "no-plusplus": "off",
+    "no-tabs": "off",
+    "no-alert": "off",
+    "prefer-destructuring": "off",
+    "no-console": "off"
+  },
+  
+  "env": {
+    "es6": true,
+    "node": true,
+    "browser": true
+  },
+  "parserOptions": {
+    "ecmaVersion": 6,
+    "sourceType": "module"
+  },
+  "extends": ["eslint:recommended", "airbnb-base", "prettier"]
 }

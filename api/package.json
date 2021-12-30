@@ -7,7 +7,6 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "eslint ./src",
     "dev": "nodemon -r dotenv/config src/app.js"
-    
   },
   "author": "Kostya Petukhov",
   "license": "ISC",
@@ -25,10 +24,14 @@
     ]
   },
   "devDependencies": {
-    "eslint": "^8.4.1",
+    "babel-eslint": "^7.1.1",
+    "eslint": "7.1.0",
+    "eslint-config-airbnb-base": "7.2.0",
     "eslint-config-prettier": "^8.3.0",
-    "eslint-plugin-prettier": "^4.0.0",
+    "eslint-plugin-import": "2.20.2",
+    "husky": "^7.0.4",
     "lint-staged": "^12.1.2",
-    "prettier": "^2.5.1"
+    "nodemon": "^2.0.15",
+    "prettier": "2.5.1"
   }
 }
