@@ -14,6 +14,22 @@ router.get('/:id', async (req, res) => {
 	res.status(200).json(article);
 });
 
+router.get('/:articleid/comments', async (req, res) => {
+	const articleComments = await db
+		.select()
+		.from('comments')
+		.where({ articleid: req.params.articleid });
+	res.status(200).json(articleComments);
+});
+
+router.get('/:articleid/likes', async (req, res) => {
+	const articleLikes = await db
+		.select()
+		.from('likes')
+		.where({ articleid: req.params.articleid });
+	res.status(200).json(articleLikes);
+});
+
 router.post('/', async (req, res) => {
 	await db.insert(req.body).into('articles');
 	res.status(201).send('Created new article!');
