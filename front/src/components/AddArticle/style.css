@@ -1,0 +1,28 @@
+.addArticle {
+	display: flex;
+	flex-direction: column;
+	width: 500px;
+	margin: 30px auto;
+}
+.addArticle p {
+	font-size: 22px;
+	font-weight: 700;
+	text-align: center;
+	margin: 0 auto;
+}
+.addArticle textarea {
+	margin-top: 15px;
+	height: 200px;
+}
+.buttonBlock {
+	display: flex;
+	justify-content: space-between;
+	margin-top: 20px;
+}
+.buttonBlock button {
+	font-size: 18px;
+	margin: 0 20px;
+	font-size: 16px;
+	font-weight: 700;
+	color: #0b2a37;
+}
