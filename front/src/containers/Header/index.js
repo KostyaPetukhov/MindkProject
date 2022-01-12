@@ -1,25 +1,20 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 import './style.css';
 
-const Header = ({ setActivePage }) => {
-	const articles = () => {
-		setActivePage('article');
-	};
-
-	const addArticle = () => {
-		setActivePage('addArticle');
-	};
-
-	const profile = () => {
-		setActivePage('profile');
-	};
-
+const Header = () => {
 	return (
 		<div className='header'>
-			<button onClick={articles}>Articles</button>
-			<button onClick={addArticle}>Add Article</button>
-			<button onClick={profile}>Profile</button>
+			<Link to='/articles'>
+				<button>Articles</button>
+			</Link>
+			<Link to='/article'>
+				<button>Add Article</button>
+			</Link>
+			<Link to='/profile'>
+				<button>Profile</button>
+			</Link>
 		</div>
 	);
 };
