@@ -2,12 +2,17 @@ import React from 'react';
 
 import './style.css';
 
-const Article = ({ fullName, date, content }) => {
+const Article = () => {
+	const article = {
+		fullName: 'Andrey Vorobey',
+		date: '25.12.2021',
+		content: 'Merry Christmas!!',
+	};
 	return (
 		<div className='articleInSocialNetwork'>
-			<p className='name'>{fullName}</p>
-			<p className='date'>{date}</p>
-			<p className='content'>{content}</p>
+			<p className='name'>{article.fullName}</p>
+			<p className='date'>{article.date}</p>
+			<p className='content'>{article.content}</p>
 		</div>
 	);
 };
