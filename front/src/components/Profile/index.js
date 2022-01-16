@@ -1,25 +1,23 @@
 import React from 'react';
 
 import './style.css';
+import ProfilePropTypes from '../../PropTypes/ProfilePropTypes';
 
-const Profile = () => {
-	const profile = {
-		fullName: 'Andrey Vorobey',
-		birth: '19.07.1996',
-		email: 'andrew142@gmail.com',
-		phone: '+380967436789',
-	};
+const Profile = (props) => {
+	const { fullName, birth, email, phone } = props;
 
 	return (
 		<div>
 			<div className='userProfile'>
-				<p className='userName'>{profile.fullName}</p>
-				<p className='field'> Birthday: {profile.birth}</p>
-				<p className='field'> Email: {profile.email}</p>
-				<p className='field'> Phone number: {profile.phone}</p>
+				<p className='userName'>{fullName}</p>
+				<p className='field'> Birthday: {birth}</p>
+				<p className='field'> Email: {email}</p>
+				<p className='field'> Phone number: {phone}</p>
 			</div>
 		</div>
 	);
 };
+
+Profile.propTypes = ProfilePropTypes;
 
 export default Profile;
