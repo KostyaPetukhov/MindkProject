@@ -14,9 +14,6 @@ const CheckDate = () => {
 	const currentMonth = nowDate.getMonth() + 1;
 	const month = currentMonth < 10 ? `0${currentMonth}` : currentMonth;
 	const dayOfMonth = nowDate.getDate();
-	console.log(enterDate);
-	console.log(nowDate.getTime());
-	console.log(enterDate.getTime());
 
 	if (checkDate) {
 		if (nowDate.getTime() > enterDate.getTime()) {

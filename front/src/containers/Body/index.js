@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import Article from '../../components/Article';
 import Profile from '../../components/Profile';
@@ -29,6 +30,10 @@ const Body = ({ activePage }) => {
 			)}
 		</div>
 	);
+};
+
+Body.propTypes = {
+	activePage: PropTypes.string.isRequired,
 };
 
 export default Body;
