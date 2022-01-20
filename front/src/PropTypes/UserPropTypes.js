@@ -1,9 +1,8 @@
 import PropTypes from 'prop-types';
-import UserInfoPropTypes from './UserInfoPropTypes';
 
 const UserPropTypes = {
-	UserInfoPropTypes,
-	friends: PropTypes.arrayOf(PropTypes.shape(UserInfoPropTypes)),
+	id: PropTypes.number.isRequired,
+	name: PropTypes.string.isRequired,
 };
 
 export default UserPropTypes;

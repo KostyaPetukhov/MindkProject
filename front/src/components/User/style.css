@@ -1,0 +1,16 @@
+.usersList {
+	display: flex;
+	flex-direction: column;
+	width: 500px;
+	margin: 20px 5px;
+}
+.listItem {
+	font-size: 22px;
+	font-weight: 400;
+	text-align: left;
+	margin: 2px;
+}
+a {
+	text-decoration: none;
+	color: black;
+}
