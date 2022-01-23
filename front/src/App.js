@@ -2,7 +2,9 @@ import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 
 import Header from './containers/Header';
-import Article from './components/Article';
+import ArticlesContainer from './containers/Articles';
+import UsersContainer from './containers/Users';
+import UserProfileContainer from './containers/Profile';
 import Profile from './components/Profile';
 import AddArticle from './components/AddArticle';
 import CheckDate from './containers/CheckDate';
@@ -31,10 +33,7 @@ function App() {
 					path='/articles'
 					element={
 						<ErrorBoundary>
-							<Article
-								date={'25.12.2021'}
-								content={'Merry Cristmas!!'}
-							/>
+							<ArticlesContainer />
 						</ErrorBoundary>
 					}
 				/>
@@ -43,6 +42,22 @@ function App() {
 					element={
 						<ErrorBoundary>
 							<CheckID />
+						</ErrorBoundary>
+					}
+				/>
+				<Route
+					path='/users'
+					element={
+						<ErrorBoundary>
+							<UsersContainer />
+						</ErrorBoundary>
+					}
+				/>
+				<Route
+					path='/users/:id'
+					element={
+						<ErrorBoundary>
+							<UserProfileContainer />
 						</ErrorBoundary>
 					}
 				/>
