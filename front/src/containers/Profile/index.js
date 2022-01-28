@@ -7,6 +7,7 @@ import getUserProfile from './api/crud';
 
 const UserProfileContainer = () => {
 	const { id } = useParams();
+	console.log(id);
 	const { isFetching, data } = useQuery(`users/${id}`, () =>
 		getUserProfile(id)
 	);

@@ -12,7 +12,7 @@ const Header = () => {
 			<Link to='/article'>
 				<button>Add Article</button>
 			</Link>
-			<Link to='/profile'>
+			<Link to='/users/1'>
 				<button>Profile</button>
 			</Link>
 		</div>

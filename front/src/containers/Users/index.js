@@ -5,7 +5,7 @@ import Users from '../../components/Users';
 import getUsers from './api/crud';
 
 const UsersContainer = () => {
-	const { isFetching, data } = useQuery('users', () => getUsers());
+	const { isFetching, data } = useQuery('user', () => getUsers());
 	const users = data?.data || [];
 
 	return (

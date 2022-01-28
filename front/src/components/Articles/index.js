@@ -5,7 +5,6 @@ import Article from '../Article';
 
 const Articles = (props) => {
 	const { articles } = props;
-	// const articles = articlesArray;
 
 	return (
 		<div>

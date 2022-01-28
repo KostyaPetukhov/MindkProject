@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 
 const ProfilePropTypes = {
-	fullName: PropTypes.string.isRequired,
+	name: PropTypes.string,
 	email: PropTypes.string.isRequired,
 	phone: PropTypes.string.isRequired,
 };
