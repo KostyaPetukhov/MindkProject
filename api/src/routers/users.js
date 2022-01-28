@@ -1,4 +1,6 @@
 const router = require('express').Router();
+const path = require('path');
+const fileMiddleware = require('../middleware/file');
 const db = require('../services/db');
 
 router.get('/', async (req, res) => {
@@ -10,6 +12,37 @@ router.get('/:id', async (req, res) => {
 	const user = await db.select().from('users').where({ id: req.params.id });
 	res.status(200).json(user);
 });
+
+router.get('/:id/avatar', async (req, res) => {
+	const avatar = await db
+		.select('avatar')
+		.from('users')
+		.where({ id: req.params.id });
+	const image = avatar.map((x) => x.avatar);
+	res.status(200).sendFile(`${image}`, {
+		root: path.dirname('../'),
+	});
+});
+
+router.post(
+	'/:id/avatar',
+	fileMiddleware.single('avatar'),
+	async (req, res) => {
+		try {
+			if (req.file) {
+				await db
+					.update({ avatar: req.file.path })
+					.from('users')
+					.where({ id: req.params.id })
+					.then(() => {
+						res.status(200).send('Avatar added!');
+					});
+			}
+		} catch (error) {
+			res.status(404).send('Avatar is not uploaded');
+		}
+	}
+);
 
 router.post('/', async (req, res) => {
 	await db.insert(req.body).into('users');
