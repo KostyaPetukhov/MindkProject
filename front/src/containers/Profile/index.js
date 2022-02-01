@@ -3,11 +3,10 @@ import { useQuery } from 'react-query';
 import { useParams } from 'react-router';
 
 import UserProfile from '../../components/UserProfile';
-import getUserProfile from './api/crud';
+import { getUserProfile } from '../Users/api/crud';
 
 const UserProfileContainer = () => {
 	const { id } = useParams();
-	console.log(id);
 	const { isFetching, data } = useQuery(`users/${id}`, () =>
 		getUserProfile(id)
 	);

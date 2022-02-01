@@ -1,23 +1,60 @@
 import React from 'react';
-import ArticlePropTypes from '../../PropTypes/ArticlePropTypes';
+import { Formik, Form, Field } from 'formik';
+import * as Yup from 'yup';
+import { useMutation } from 'react-query';
+import { TextField } from 'formik-mui';
+import { Button } from '@mui/material';
+import { editArticle } from '../../containers/Articles/api/crud';
 
+import ArticlePropTypes from '../../PropTypes/ArticlePropTypes';
 import './style.css';
 
 const Article = (props) => {
-	const { fullName, date, content } = props;
+	const { id, fullName, date } = props;
+
+	const schema = Yup.object().shape({
+		content: Yup.string()
+			.required('Обязательное поле!')
+			.min(2, 'Не менее двух символов!'),
+	});
+
+	const mutation = useMutation((data) => editArticle(id, data));
+
+	const onFormSubmit = (data) => {
+		mutation.mutate({
+			articletitle: data.content,
+			articleupdatedate: new Date(),
+		});
+	};
+
 	return (
-		<div className='articleInSocialNetwork'>
-			<p className='name'>{fullName}</p>
-			<p className='date'>{date}</p>
-			<p className='content'>{content}</p>
-		</div>
+		<Formik
+			initialValues={{ ...props }}
+			onSubmit={onFormSubmit}
+			validationSchema={schema}
+		>
+			<Form>
+				<div className='articleInSocialNetwork'>
+					<p className='name'>{fullName}</p>
+					<p className='date'>{date}</p>
+					<Field
+						component={TextField}
+						as='textarea'
+						name='content'
+						className='textarea'
+					></Field>
+					<div className='buttonBlock'>
+						<Button variant='outlined'>Cancel</Button>
+						<Button variant='contained' type='submit'>
+							Edit
+						</Button>
+					</div>
+				</div>
+			</Form>
+		</Formik>
 	);
 };
 
 Article.propTypes = ArticlePropTypes;
-
-Article.defaultProps = {
-	fullName: 'Ivan Ivanov',
-};
 
 export default Article;

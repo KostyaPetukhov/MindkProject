@@ -5,7 +5,6 @@ import Header from './containers/Header';
 import ArticlesContainer from './containers/Articles';
 import UsersContainer from './containers/Users';
 import UserProfileContainer from './containers/Profile';
-// import Profile from './components/Profile';
 import AddArticle from './components/AddArticle';
 import CheckDate from './containers/CheckDate';
 import CheckID from './containers/CheckID';
@@ -61,19 +60,6 @@ function App() {
 						</ErrorBoundary>
 					}
 				/>
-				{/* <Route
-					path='/profile'
-					element={
-						<ErrorBoundary>
-							<Profile
-							fullName={'Kostya Petuhkov'}
-							birth={'15.05.1995'}
-							email={'qwerty123@gmail.com'}
-							phone={'+380994312765'}
-							/>
-						</ErrorBoundary>
-					}
-				/> */}
 				<Route
 					path='/date'
 					element={<div>Enter date in format YYYY-MM-DD </div>}
