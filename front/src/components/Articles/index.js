@@ -8,9 +8,11 @@ const Articles = (props) => {
 
 	return (
 		<div>
-			{articles.map(({ id, articletitle, articlecreatedate }) => (
+			{articles.map(({ id, userid, articletitle, articlecreatedate }) => (
 				<Article
 					key={id}
+					id={id}
+					fullName={userid}
 					content={articletitle}
 					date={articlecreatedate}
 				/>

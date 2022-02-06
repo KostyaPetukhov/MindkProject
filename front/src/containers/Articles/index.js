@@ -2,10 +2,10 @@ import React from 'react';
 import { useQuery } from 'react-query';
 
 import Articles from '../../components/Articles';
-import getActicles from './api/crud';
+import { getArticles } from './api/crud';
 
 const ArticlesContainer = () => {
-	const { isFetching, data } = useQuery('articles', () => getActicles());
+	const { isFetching, data } = useQuery('articles', () => getArticles());
 	const articles = data?.data || [];
 
 	return (
