@@ -23,7 +23,7 @@ const Article = (props) => {
 	const onFormSubmit = (data) => {
 		mutation.mutate({
 			articletitle: data.content,
-			articleupdatedate: new Date(),
+			articleupdatedat: new Date(),
 		});
 	};
 
