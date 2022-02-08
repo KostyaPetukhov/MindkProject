@@ -22,7 +22,7 @@ const AddArticle = () => {
 		mutation.mutate({
 			userid: data.userid,
 			articletitle: data.content,
-			articlecreatedate: new Date(),
+			articlecreatedat: new Date(),
 		});
 	};
 
