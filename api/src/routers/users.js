@@ -52,9 +52,8 @@ router.post(
 	fileMiddleware.single('avatar'),
 	asyncErrorHandler(async (req, res) => {
 		const id = req.params.id;
-		const avatar = req.file.path;
-
-		const addAvatar = await userService.addUserAvatar(id, avatar);
+		const image = req.file.path;
+		const addAvatar = await userService.addUserAvatar(id, image);
 		if (addAvatar) {
 			res.status(200).send('Avatar updated!');
 		} else {

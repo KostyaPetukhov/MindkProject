@@ -2,6 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const db = require('./services/db');
+const path = require('path');
 
 const config = require('./services/config');
 const usersRoutes = require('./routers/users');
@@ -19,6 +20,7 @@ const port = config.port;
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cors());
+app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
 
 app.use(
 	loggerMiddleware({

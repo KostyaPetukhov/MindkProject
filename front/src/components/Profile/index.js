@@ -55,7 +55,7 @@ const Profile = (props) => {
 							{name}
 							<Avatar
 								alt={name}
-								src={avatar}
+								src={`http://localhost:3333/${avatar}`}
 								sx={{ width: 56, height: 56 }}
 							/>
 						</p>
@@ -100,6 +100,15 @@ const Profile = (props) => {
 					</Form>
 				</div>
 			</Formik>
+
+			<form
+				action={`http://localhost:3333/users/${id}/avatar`}
+				method='POST'
+				encType='multipart/form-data'
+			>
+				<input type='file' name='avatar' />
+				<button type='submit'>SEND</button>
+			</form>
 		</div>
 	);
 };

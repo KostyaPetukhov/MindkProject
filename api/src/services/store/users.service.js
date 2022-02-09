@@ -12,8 +12,8 @@ module.exports = {
 	getUserAvatar: async (id) =>
 		db.select('avatar').from('users').where({ id }),
 
-	addUserAvatar: async (id, avatar) =>
-		db.update({ avatar }).from('users').where({ id }),
+	addUserAvatar: async (id, image) =>
+		db.update({ avatar: image }).from('users').where({ id }),
 
 	editUser: async (id, userProfile) =>
 		db.select().from('users').where({ id }).update(userProfile),
