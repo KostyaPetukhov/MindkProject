@@ -11,3 +11,9 @@ export const getUserProfile = async (id) => {
 export const editUserProfile = async (id, data) => {
 	return apiClient.put(`/users/${id}`, data);
 };
+
+export const addUserAvatar = async (id, data) => {
+	return apiClient.post(`/users/${id}/avatar`, data, {
+		headers: { 'Content-Type': 'multipart/form-data' },
+	});
+};

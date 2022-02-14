@@ -3,14 +3,15 @@ import { Formik, Form, Field } from 'formik';
 import * as Yup from 'yup';
 import { useMutation } from 'react-query';
 import { TextField } from 'formik-mui';
-import { Button, Box, Avatar } from '@mui/material';
+import { Button, Box } from '@mui/material';
 import { editUserProfile } from '../../containers/Users/api/crud';
+import FormikAutocomplete from '../FormikAutocomplete';
 
 import './style.css';
 import ProfilePropTypes from '../../PropTypes/ProfilePropTypes';
 
 const Profile = (props) => {
-	const { id, name, avatar } = props;
+	const { id } = props;
 
 	const schema = Yup.object().shape({
 		nickname: Yup.string().min(2, 'At least two signs!'),
@@ -37,8 +38,16 @@ const Profile = (props) => {
 			pagename: data.nickname,
 			email: data.email,
 			phone: data.phone,
+			emailvisibility: data.emailvisibility.value,
+			phonevisibility: data.phonevisibility.value,
 		});
 	};
+
+	const options = [
+		{ value: 'all', label: 'All' },
+		{ value: 'friends', label: 'Friends' },
+		{ value: 'me', label: 'Only Me' },
+	];
 
 	return (
 		<div>
@@ -51,14 +60,6 @@ const Profile = (props) => {
 			>
 				<div className='userProfile'>
 					<Form>
-						<p className='userName'>
-							{name}
-							<Avatar
-								alt={name}
-								src={`http://localhost:3333/${avatar}`}
-								sx={{ width: 56, height: 56 }}
-							/>
-						</p>
 						<Box margin={1}>
 							<Field
 								label='Page name:'
@@ -75,20 +76,35 @@ const Profile = (props) => {
 								name='name'
 							/>
 						</Box>
-						<Box margin={1}>
+						<Box margin={1} className='blockWithSelect'>
 							<Field
 								label='Email:'
 								component={TextField}
 								type='email'
 								name='email'
 							/>
-						</Box>
-						<Box margin={1}>
 							<Field
+								className='select'
+								component={FormikAutocomplete}
+								name='emailvisibility'
+								options={options}
+								value={options.value}
+							/>
+						</Box>
+						<Box margin={1} className='blockWithSelect'>
+							<Field
+								className='info'
 								label='Phone number:'
 								component={TextField}
 								type='input'
 								name='phone'
+							/>
+							<Field
+								className='select'
+								component={FormikAutocomplete}
+								name='phonevisibility'
+								options={options}
+								value={options.value}
 							/>
 						</Box>
 						<div className='buttonBlock'>
@@ -100,15 +116,6 @@ const Profile = (props) => {
 					</Form>
 				</div>
 			</Formik>
-
-			<form
-				action={`http://localhost:3333/users/${id}/avatar`}
-				method='POST'
-				encType='multipart/form-data'
-			>
-				<input type='file' name='avatar' />
-				<button type='submit'>SEND</button>
-			</form>
 		</div>
 	);
 };
