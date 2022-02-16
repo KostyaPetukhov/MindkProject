@@ -18,10 +18,27 @@ module.exports = {
 	getArticlesLikes: async (articleid) =>
 		db.select().from('likes').where({ articleid }),
 
-	addArticle: async (articleData) => db.insert(articleData).into('articles'),
+	addArticle: async (articleData, picture) =>
+		db
+			.insert({
+				articletitle: articleData.articletitle,
+				userid: articleData.userid,
+				articlecreatedat: articleData.articlecreatedat,
+				visibility: articleData.visibility,
+				image: picture,
+			})
+			.into('articles'),
 
-	editArticle: async (id, articleData) =>
-		db.select().from('articles').where({ id }).update(articleData),
+	addArticleImage: async (id, image) =>
+		db.update({ image }).from('articles').where({ id }),
+
+	editArticle: async (id, articleData, picture) =>
+		db.select().from('articles').where({ id }).update({
+			articletitle: articleData.articletitle,
+			articleupdatedat: articleData.articleupdatedat,
+			visibility: articleData.visibility,
+			image: picture,
+		}),
 
 	deleteArticle: async (id) =>
 		db.select().from('articles').where({ id }).del(),

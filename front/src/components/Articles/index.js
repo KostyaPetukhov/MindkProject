@@ -8,15 +8,18 @@ const Articles = (props) => {
 
 	return (
 		<div>
-			{articles.map(({ id, userid, articletitle, articlecreatedat }) => (
-				<Article
-					key={id}
-					id={id}
-					fullName={userid}
-					content={articletitle}
-					date={articlecreatedat}
-				/>
-			))}
+			{articles.map(
+				({ id, userid, articletitle, articlecreatedat, image }) => (
+					<Article
+						key={id}
+						id={id}
+						fullName={userid}
+						content={articletitle}
+						date={articlecreatedat}
+						image={image}
+					/>
+				)
+			)}
 		</div>
 	);
 };

@@ -9,9 +9,13 @@ export const getArticle = async (id) => {
 };
 
 export const addArticle = async (data) => {
-	return apiClient.post('/articles', data);
+	return apiClient.post('/articles', data, {
+		headers: { 'Content-Type': 'multipart/form-data' },
+	});
 };
 
 export const editArticle = async (id, data) => {
-	return apiClient.put(`/articles/${id}`, data);
+	return apiClient.put(`/articles/${id}`, data, {
+		headers: { 'Content-Type': 'multipart/form-data' },
+	});
 };
