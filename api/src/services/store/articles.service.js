@@ -18,11 +18,11 @@ module.exports = {
 	getArticlesLikes: async (articleid) =>
 		db.select().from('likes').where({ articleid }),
 
-	addArticle: async (articleData, picture) =>
+	addArticle: async (articleData, picture, userid) =>
 		db
 			.insert({
 				articletitle: articleData.articletitle,
-				userid: articleData.userid,
+				userid,
 				articlecreatedat: articleData.articlecreatedat,
 				visibility: articleData.visibility,
 				image: picture,

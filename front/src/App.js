@@ -6,6 +6,7 @@ import ArticlesContainer from './containers/Articles';
 import UsersContainer from './containers/Users';
 import UserProfileContainer from './containers/Profile';
 import AddArticle from './components/AddArticle';
+import Auth from './containers/Auth';
 import CheckDate from './containers/CheckDate';
 import CheckID from './containers/CheckID';
 import ErrorBoundary from './components/ErrorBoundary';
@@ -69,6 +70,14 @@ function App() {
 					element={
 						<ErrorBoundary>
 							<CheckDate />
+						</ErrorBoundary>
+					}
+				/>
+				<Route
+					path='/auth'
+					element={
+						<ErrorBoundary>
+							<Auth />
 						</ErrorBoundary>
 					}
 				/>

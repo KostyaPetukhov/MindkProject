@@ -1,6 +1,7 @@
 const router = require('express').Router();
 const commentServices = require('../services/store/comments.services');
 const asyncErrorHandler = require('../middleware/asyncErrorHandler');
+const authMiddleware = require('../middleware/auth');
 
 router.get(
 	'/',
@@ -34,10 +35,12 @@ router.get(
 
 router.post(
 	'/',
+	authMiddleware,
 	asyncErrorHandler(async (req, res) => {
-		const comment = req.body;
-
-		const addComment = await commentServices.addComment(comment);
+		const addComment = await commentServices.addComment({
+			...req.body,
+			userid: req.auth.id,
+		});
 		if (addComment && Object.keys(addComment).length) {
 			res.status(201).send('Created new comment');
 		} else {
@@ -48,6 +51,7 @@ router.post(
 
 router.put(
 	'/:id',
+	authMiddleware,
 	asyncErrorHandler(async (req, res) => {
 		const id = req.params.id;
 		const comment = req.body;
@@ -63,6 +67,7 @@ router.put(
 
 router.delete(
 	'/:id',
+	authMiddleware,
 	asyncErrorHandler(async (req, res) => {
 		const id = req.params.id;
 

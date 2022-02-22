@@ -3,6 +3,7 @@ const path = require('path');
 const fileMiddleware = require('../middleware/file');
 const asyncErrorHandler = require('../middleware/asyncErrorHandler');
 const userService = require('../services/store/users.service');
+const authMiddleware = require('../middleware/auth');
 
 router.get(
 	'/',
@@ -49,6 +50,7 @@ router.get(
 
 router.post(
 	'/:id/avatar',
+	authMiddleware,
 	fileMiddleware.single('avatar'),
 	asyncErrorHandler(async (req, res) => {
 		const id = req.params.id;
@@ -64,6 +66,7 @@ router.post(
 
 router.post(
 	'/',
+	authMiddleware,
 	asyncErrorHandler(async (req, res) => {
 		const userProfile = req.body;
 
@@ -78,6 +81,7 @@ router.post(
 
 router.put(
 	'/:id',
+	authMiddleware,
 	asyncErrorHandler(async (req, res) => {
 		const id = req.params.id;
 		const userProfile = req.body;
@@ -93,6 +97,7 @@ router.put(
 
 router.delete(
 	'/:id',
+	authMiddleware,
 	asyncErrorHandler(async (req, res) => {
 		const id = req.params.id;
 

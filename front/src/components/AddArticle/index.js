@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { Formik, Form, Field, ErrorMessage } from 'formik';
+import { Formik, Form, Field } from 'formik';
 import * as Yup from 'yup';
 import { useMutation } from 'react-query';
-import { TextField, InputBase } from 'formik-mui';
+import { TextField } from 'formik-mui';
 import { Button } from '@mui/material';
 import { addArticle } from '../../containers/Articles/api/crud';
 import FormikAutocomplete from '../FormikAutocomplete';
@@ -12,7 +12,6 @@ import './style.css';
 
 const AddArticle = () => {
 	const schema = Yup.object().shape({
-		userid: Yup.number().required('Required field!'),
 		content: Yup.string()
 			.required('Required field!')
 			.min(2, 'At least two signs!'),
@@ -22,7 +21,6 @@ const AddArticle = () => {
 
 	const onFormSubmit = (data) => {
 		const formData = serialize({
-			userid: data.userid,
 			articletitle: data.content,
 			articlecreatedat: new Date(),
 			visibility: data.visibility.value,
@@ -62,7 +60,6 @@ const AddArticle = () => {
 		<div>
 			<Formik
 				initialValues={{
-					userid: '1',
 					visibility: 'All',
 				}}
 				onSubmit={onFormSubmit}
@@ -70,16 +67,6 @@ const AddArticle = () => {
 			>
 				<div className='addArticle'>
 					<Form>
-						<Field
-							component={InputBase}
-							type='input'
-							name='userid'
-						/>
-						<ErrorMessage
-							name='userid'
-							className='error'
-							component='div'
-						/>
 						<Field
 							component={TextField}
 							label='Post new article'
