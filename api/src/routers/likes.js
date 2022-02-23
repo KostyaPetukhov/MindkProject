@@ -1,6 +1,7 @@
 const router = require('express').Router();
 const likesServices = require('../services/store/likes.services');
 const asyncErrorHandler = require('../middleware/asyncErrorHandler');
+const authMiddleware = require('../middleware/auth');
 
 router.get(
 	'/',
@@ -34,10 +35,14 @@ router.get(
 
 router.post(
 	'/',
+	authMiddleware,
 	asyncErrorHandler(async (req, res) => {
 		const like = req.body;
 
-		const addLike = await likesServices.addLike(like);
+		const addLike = await likesServices.addLike({
+			...like,
+			userid: req.auth.id,
+		});
 		if (addLike && Object.keys(addLike).length) {
 			res.status(201).send('Add like');
 		} else {
@@ -48,6 +53,7 @@ router.post(
 
 router.delete(
 	'/:id',
+	authMiddleware,
 	asyncErrorHandler(async (req, res) => {
 		const id = req.params.id;
 

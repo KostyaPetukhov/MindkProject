@@ -2,6 +2,7 @@ const router = require('express').Router();
 const articlesService = require('../services/store/articles.service');
 const asyncErrorHandler = require('../middleware/asyncErrorHandler');
 const fileMiddleware = require('../middleware/file');
+const authMiddleware = require('../middleware/auth');
 
 router.get(
 	'/',
@@ -70,14 +71,17 @@ router.get(
 
 router.post(
 	'/',
+	authMiddleware,
 	fileMiddleware.single('image'),
 	asyncErrorHandler(async (req, res) => {
 		const articleData = req.body;
 		const picture = req.file.path;
+		const userid = req.auth.id;
 
 		const addArticle = await articlesService.addArticle(
 			articleData,
-			picture
+			picture,
+			userid
 		);
 		if (addArticle && Object.keys(addArticle).length) {
 			res.status(201).send('Created new article');
@@ -89,6 +93,7 @@ router.post(
 
 router.post(
 	'/:id/image',
+	authMiddleware,
 	fileMiddleware.single('image'),
 	asyncErrorHandler(async (req, res) => {
 		const id = req.params.id;
@@ -104,6 +109,7 @@ router.post(
 
 router.put(
 	'/:id',
+	authMiddleware,
 	fileMiddleware.single('image'),
 	asyncErrorHandler(async (req, res) => {
 		const id = req.params.id;
@@ -125,6 +131,7 @@ router.put(
 
 router.delete(
 	'/:id',
+	authMiddleware,
 	asyncErrorHandler(async (req, res) => {
 		const id = req.params.id;
 

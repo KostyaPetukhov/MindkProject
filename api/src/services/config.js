@@ -6,4 +6,10 @@ module.exports = {
 	dbUser: process.env.DB_USER,
 	dbPassword: process.env.DB_PASS,
 	dbDatabase: process.env.DB_DATABASE,
+	appKey: process.env.APP_KEY,
+	googleClientId: process.env.GOOGLE_CLIENT_ID,
+	googleClientSecret: process.env.GOOGLE_CLIENT_SECRET,
+	facebookClientId: process.env.FACEBOOK_CLIENT_ID,
+	facebookClientSecret: process.env.FACEBOOK_CLIENT_SECRET,
+	tokenExpiresIn: '1h',
 };

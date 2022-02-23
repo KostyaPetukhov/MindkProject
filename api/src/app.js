@@ -3,14 +3,18 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const db = require('./services/db');
 const path = require('path');
+const passport = require('passport');
 
 const config = require('./services/config');
 const usersRoutes = require('./routers/users');
 const articlesRoutes = require('./routers/articles');
 const commentsRoutes = require('./routers/comments');
 const likesRoutes = require('./routers/likes');
+const authRoutes = require('./routers/auth');
 const loggerMiddleware = require('./middleware/logger');
 const errorHandler = require('./middleware/errorHandler');
+require('./domain/google.strategy');
+require('./domain/facebook.strategy');
 
 const app = express();
 
@@ -21,6 +25,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cors());
 app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
+app.use(passport.initialize());
 
 app.use(
 	loggerMiddleware({
@@ -29,6 +34,7 @@ app.use(
 	})
 );
 
+app.use('/auth', authRoutes);
 app.use('/users', usersRoutes);
 app.use('/articles', articlesRoutes);
 app.use('/comments', commentsRoutes);
