@@ -12,8 +12,8 @@ const Header = () => {
 			<Link to='/article'>
 				<button>Add Article</button>
 			</Link>
-			<Link to='/users/1'>
-				<button>Profile</button>
+			<Link to='/users'>
+				<button>Users list</button>
 			</Link>
 		</div>
 	);
