@@ -4,7 +4,7 @@ const passport = require('passport');
 const authService = require('../domain/auth');
 const asyncErrorHandler = require('../middleware/asyncErrorHandler');
 const UnauthorizedException = require('../errors/UnathorizedException');
-const ForbiddenException = require('../errors/ForbiddenExeption');
+const ForbiddenException = require('../errors/ForbiddenException');
 
 router.post(
 	'/refresh',

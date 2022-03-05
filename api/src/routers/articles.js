@@ -113,13 +113,13 @@ router.put(
 	fileMiddleware.single('image'),
 	asyncErrorHandler(async (req, res) => {
 		const id = req.params.id;
-		const picture = req.file.path;
+		// const picture = req.file.path;
 		const articleData = req.body;
 
 		const editArticle = await articlesService.editArticle(
 			id,
-			articleData,
-			picture
+			articleData
+			// picture
 		);
 		if (editArticle) {
 			res.status(200).send('Article updated!');

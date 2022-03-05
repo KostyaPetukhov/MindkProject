@@ -84,6 +84,7 @@ router.put(
 	authMiddleware,
 	asyncErrorHandler(async (req, res) => {
 		const id = req.params.id;
+		// const id = req.auth.id;
 		const userProfile = req.body;
 
 		const editUser = await userService.editUser(id, userProfile);

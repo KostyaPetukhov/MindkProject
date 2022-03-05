@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+
 import { Formik, Form, Field } from 'formik';
 import * as Yup from 'yup';
 import { useMutation } from 'react-query';
@@ -12,7 +13,7 @@ import ArticlePropTypes from '../../PropTypes/ArticlePropTypes';
 import './style.css';
 
 const Article = (props) => {
-	const { id, fullName, date, image } = props;
+	const { id, image } = props;
 
 	const schema = Yup.object().shape({
 		content: Yup.string()
@@ -70,16 +71,14 @@ const Article = (props) => {
 			validationSchema={schema}
 		>
 			<Form>
-				<div className='articleInSocialNetwork'>
-					<p className='name'>{fullName}</p>
-					<p className='date'>{date}</p>
+				<>
 					<Field
 						component={TextField}
 						as='textarea'
 						name='content'
 						className='textarea'
 						multiline
-						rows={2}
+						rows={6}
 					/>
 					{image && (
 						<CardMedia
@@ -110,7 +109,7 @@ const Article = (props) => {
 							Edit
 						</Button>
 					</div>
-				</div>
+				</>
 			</Form>
 		</Formik>
 	);
