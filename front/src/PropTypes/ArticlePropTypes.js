@@ -1,8 +1,8 @@
 import PropTypes from 'prop-types';
 
 const ArticlePropTypes = {
-	id: PropTypes.number.isRequired,
-	content: PropTypes.string.isRequired,
+	id: PropTypes.number,
+	content: PropTypes.string,
 };
 
 export default ArticlePropTypes;

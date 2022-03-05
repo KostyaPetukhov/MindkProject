@@ -6,11 +6,9 @@ import ArticlesContainer from './containers/Articles';
 import UsersContainer from './containers/Users';
 import UserProfileContainer from './containers/Profile';
 import AddArticle from './components/AddArticle';
-import Auth from './containers/Auth';
-import CheckDate from './containers/CheckDate';
-import CheckID from './containers/CheckID';
 import ErrorBoundary from './components/ErrorBoundary';
 import authContext from './authContext';
+import GuestPage from './components/GuestPage';
 import './App.css';
 
 function App() {
@@ -42,6 +40,14 @@ function App() {
 					<Route
 						path='/'
 						element={
+							<ErrorBoundary>
+								<GuestPage />
+							</ErrorBoundary>
+						}
+					/>
+					<Route
+						path='/context'
+						element={
 							<div>
 								Home Page
 								<button onClick={changeContext}>
@@ -67,14 +73,6 @@ function App() {
 						}
 					/>
 					<Route
-						path='/articles/:id'
-						element={
-							<ErrorBoundary>
-								<CheckID />
-							</ErrorBoundary>
-						}
-					/>
-					<Route
 						path='/users'
 						element={
 							<ErrorBoundary>
@@ -87,26 +85,6 @@ function App() {
 						element={
 							<ErrorBoundary>
 								<UserProfileContainer />
-							</ErrorBoundary>
-						}
-					/>
-					<Route
-						path='/date'
-						element={<div>Enter date in format YYYY-MM-DD </div>}
-					/>
-					<Route
-						path='date/:date'
-						element={
-							<ErrorBoundary>
-								<CheckDate />
-							</ErrorBoundary>
-						}
-					/>
-					<Route
-						path='/auth'
-						element={
-							<ErrorBoundary>
-								<Auth />
 							</ErrorBoundary>
 						}
 					/>

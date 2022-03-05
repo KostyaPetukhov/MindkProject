@@ -78,7 +78,7 @@ const Article = (props) => {
 						name='content'
 						className='textarea'
 						multiline
-						rows={2}
+						rows={6}
 					/>
 					{image && (
 						<CardMedia

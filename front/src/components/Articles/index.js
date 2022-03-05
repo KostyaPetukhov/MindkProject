@@ -1,9 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import Button from '@mui/material/Button';
-import Modal from '@mui/material/Modal';
-import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
+import { Button, CardMedia, Modal, Box, Typography } from '@mui/material';
 import Article from '../Article';
 
 const style = {
@@ -12,7 +9,7 @@ const style = {
 	left: '50%',
 	transform: 'translate(-50%, -50%)',
 	bgcolor: 'background.paper',
-	border: '2px solid #000',
+	borderRadius: 3,
 	boxShadow: 24,
 	p: 4,
 };
@@ -36,7 +33,16 @@ const Articles = (props) => {
 					<div key={id} className='articleInSocialNetwork'>
 						<div className='name'>{userid}</div>
 						<div className='date'>{articlecreatedat}</div>
-						<div className='content'>{articletitle}</div>
+						<div className='content'>
+							{articletitle}
+							{image && (
+								<CardMedia
+									component='img'
+									image={`http://localhost:3333/${image}`}
+									height='200px'
+								/>
+							)}
+						</div>
 						<Button
 							onClick={openModal(
 								<Article
