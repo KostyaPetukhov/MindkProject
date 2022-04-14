@@ -1,7 +1,6 @@
 const router = require('express').Router();
 const articlesService = require('../services/store/articles.service');
 const asyncErrorHandler = require('../middleware/asyncErrorHandler');
-const fileMiddleware = require('../middleware/file');
 const authMiddleware = require('../middleware/auth');
 
 router.get(
@@ -72,17 +71,15 @@ router.get(
 router.post(
 	'/',
 	authMiddleware,
-	fileMiddleware.single('image'),
 	asyncErrorHandler(async (req, res) => {
 		const articleData = req.body;
-		const picture = req.file.path;
 		const userid = req.auth.id;
 
 		const addArticle = await articlesService.addArticle(
 			articleData,
-			picture,
 			userid
 		);
+
 		if (addArticle && Object.keys(addArticle).length) {
 			res.status(201).send('Created new article');
 		} else {
@@ -91,36 +88,15 @@ router.post(
 	})
 );
 
-router.post(
-	'/:id/image',
-	authMiddleware,
-	fileMiddleware.single('image'),
-	asyncErrorHandler(async (req, res) => {
-		const id = req.params.id;
-		const image = req.file.path;
-		const addImage = await articlesService.addArticleImage(id, image);
-		if (addImage) {
-			res.status(200).send('Image loaded!');
-		} else {
-			res.status(404).send('Image is not loaded');
-		}
-	})
-);
-
 router.put(
 	'/:id',
 	authMiddleware,
-	fileMiddleware.single('image'),
+
 	asyncErrorHandler(async (req, res) => {
 		const id = req.params.id;
-		// const picture = req.file.path;
 		const articleData = req.body;
 
-		const editArticle = await articlesService.editArticle(
-			id,
-			articleData
-			// picture
-		);
+		const editArticle = await articlesService.editArticle(id, articleData);
 		if (editArticle) {
 			res.status(200).send('Article updated!');
 		} else {

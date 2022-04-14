@@ -10,6 +10,7 @@ const usersRoutes = require('./routers/users');
 const articlesRoutes = require('./routers/articles');
 const commentsRoutes = require('./routers/comments');
 const likesRoutes = require('./routers/likes');
+const universRoutes = require('./routers/universities');
 const authRoutes = require('./routers/auth');
 const loggerMiddleware = require('./middleware/logger');
 const errorHandler = require('./middleware/errorHandler');
@@ -39,6 +40,7 @@ app.use('/users', usersRoutes);
 app.use('/articles', articlesRoutes);
 app.use('/comments', commentsRoutes);
 app.use('/likes', likesRoutes);
+app.use('/univers', universRoutes);
 
 app.use(errorHandler);
 

@@ -2,7 +2,24 @@ const db = require('../db');
 
 module.exports = {
 	getAllArticles: async (limit, offset) =>
-		db.select().from('articles').limit(limit).offset(offset).orderBy('id'),
+		db('articles as a')
+			.select(
+				'a.id',
+				'a.articletitle',
+				'a.articlecreatedat',
+				'a.articleupdatedat',
+				'a.visibility',
+				'u.username as user',
+				'u.avatar as avatar'
+			)
+			.leftJoin('users as u', 'a.userid', '=', 'u.id')
+			.limit(limit)
+			.offset(offset)
+			.orderBy(
+				'a.articleupdatedat',
+				'desc' || 'a.articlecreatedat',
+				'desc'
+			),
 
 	getArticle: async (id) =>
 		db.select().from('articles').where({ id }).orderBy('id'),
@@ -18,27 +35,18 @@ module.exports = {
 	getArticlesLikes: async (articleid) =>
 		db.select().from('likes').where({ articleid }),
 
-	addArticle: async (articleData, userid, picture) =>
+	addArticle: async (articleData, userid) =>
 		db
 			.insert({
 				articletitle: articleData.articletitle,
 				userid,
 				articlecreatedat: articleData.articlecreatedat,
 				visibility: articleData.visibility,
-				image: picture,
 			})
 			.into('articles'),
 
-	addArticleImage: async (id, image) =>
-		db.update({ image }).from('articles').where({ id }),
-
-	editArticle: async (id, articleData, picture) =>
-		db.select().from('articles').where({ id }).update({
-			articletitle: articleData.articletitle,
-			articleupdatedat: articleData.articleupdatedat,
-			visibility: articleData.visibility,
-			image: picture,
-		}),
+	editArticle: async (id, articleData) =>
+		db.select().from('articles').where({ id }).update(articleData),
 
 	deleteArticle: async (id) =>
 		db.select().from('articles').where({ id }).del(),

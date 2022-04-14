@@ -46,6 +46,9 @@ router.post(
 			return res.send({
 				accessToken,
 				refreshToken,
+				userId: req.user.id,
+				username: req.user.username,
+				avatar: req.user.avatar,
 				success: true,
 			});
 		}
@@ -64,6 +67,9 @@ router.post(
 			return res.send({
 				accessToken,
 				refreshToken,
+				userId: req.user.id,
+				username: req.user.username,
+				avatar: req.user.avatar,
 				success: true,
 			});
 		}

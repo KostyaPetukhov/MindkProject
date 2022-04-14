@@ -12,6 +12,7 @@ passport.use(
 
 		async (accessToken, refreshToken, profile, done) => {
 			const [{ value: email }] = profile.emails;
+
 			let user = await userService.getUserByEmail(email);
 			console.log(user);
 			if (!user) {
@@ -25,6 +26,7 @@ passport.use(
 				id: user.id,
 				username: user.username,
 				email: user.email,
+				avatar: user.avatar,
 			});
 		}
 	)

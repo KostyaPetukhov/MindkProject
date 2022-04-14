@@ -13,7 +13,7 @@ module.exports = {
 			const user = await userService.getUserById(session.userid);
 
 			const accessToken = jwt.sign(
-				{ id: user.id, username: user.username },
+				{ id: user.id, username: user.username, avatar: user.avatar },
 				config.appKey,
 				{
 					expiresIn: config.tokenExpiresIn,
@@ -36,7 +36,7 @@ module.exports = {
 
 		if (user) {
 			const accessToken = jwt.sign(
-				{ id: user.id, username: user.username },
+				{ id: user.id, username: user.username, avatar: user.avatar },
 				config.appKey,
 				{
 					expiresIn: config.tokenExpiresIn,
