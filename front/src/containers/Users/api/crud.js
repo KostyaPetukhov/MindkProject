@@ -17,3 +17,7 @@ export const addUserAvatar = async (id, data) => {
 		headers: { 'Content-Type': 'multipart/form-data' },
 	});
 };
+
+export const getUniversities = async () => {
+	return apiClient.get('/univers');
+};

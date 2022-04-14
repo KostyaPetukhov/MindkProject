@@ -1,17 +1,23 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
 
-import Header from './containers/Header';
+import Header from './components/Header';
 import ArticlesContainer from './containers/Articles';
 import UsersContainer from './containers/Users';
 import UserProfileContainer from './containers/Profile';
-import AddArticle from './components/AddArticle';
 import ErrorBoundary from './components/ErrorBoundary';
+import PageNotFound from './components/PageNotFound';
 import authContext from './authContext';
 import GuestPage from './components/GuestPage';
 import './App.css';
 
 function App() {
+	useEffect(() => {
+		window.process = {
+			...window.process,
+		};
+	}, []);
+
 	const [userData, setUserData] = useState({
 		isAuth: false,
 		user: null,
@@ -45,6 +51,7 @@ function App() {
 							</ErrorBoundary>
 						}
 					/>
+
 					<Route
 						path='/context'
 						element={
@@ -56,14 +63,7 @@ function App() {
 							</div>
 						}
 					/>
-					<Route
-						path='/article'
-						element={
-							<ErrorBoundary>
-								<AddArticle />
-							</ErrorBoundary>
-						}
-					/>
+
 					<Route
 						path='/articles'
 						element={
@@ -88,7 +88,7 @@ function App() {
 							</ErrorBoundary>
 						}
 					/>
-					<Route path='*' element={<div>Page not found</div>} />
+					<Route path='*' element={<PageNotFound />} />
 				</Routes>
 			</authContext.Provider>
 		</div>

@@ -1,6 +1,8 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
+import { Navigate } from 'react-router-dom';
 import GoogleLogin from 'react-google-login';
 import FacebookLogin from 'react-facebook-login';
+
 import { apiClient } from '../../config/axios';
 import { googleClientId } from '../../config/config';
 import { facebookClientId } from '../../config/config';
@@ -14,10 +16,9 @@ const useStyles = makeStyles(() => ({
 	title: {
 		flexGrow: 1,
 	},
-	auth: {
+	authForm: {
 		flexDirection: 'column',
 		marginTop: 10,
-		// backgroundColor: '#2e74f56b',s
 	},
 	paragraph: {
 		fontWeight: 400,
@@ -27,11 +28,8 @@ const useStyles = makeStyles(() => ({
 		color: 'rgba(0, 0, 0, 0.6)',
 	},
 	googleLogin: {
-		width: 238,
+		width: 240,
 		heigth: 80,
-		// opacity: '1',
-		// fontSize: '16px',
-		// color: rgba(0, 0, 0, 0.54);
 		justifyContent: 'center',
 		marginBottom: 30,
 	},
@@ -54,17 +52,22 @@ const AuthForm = () => {
 		if (localStorageAuth) {
 			setAuth(JSON.parse(localStorageAuth));
 		}
-	});
+	}, []);
 
 	const handleGoogleAuth = useCallback((data) => {
+		console.log('data', data);
 		apiClient
 			.post('auth/google', {
 				access_token: data.accessToken,
 			})
 			.then((response) => {
+				console.log('resopne', response);
 				setAuth({
 					accessToken: response.data.accessToken,
 					refreshToken: response.data.refreshToken,
+					userId: response.data.userId,
+					username: response.data.username,
+					avatar: response.data.avatar,
 					user: parseJwt(response.data.accessToken),
 				});
 			})
@@ -90,11 +93,11 @@ const AuthForm = () => {
 			});
 	});
 
-	if (!auth.user) {
+	if (!auth.userId) {
 		return (
 			<>
 				<Grid
-					className={classes.auth}
+					className={classes.authForm}
 					container
 					flexDirection='column'
 					alignContent='center'
@@ -103,27 +106,31 @@ const AuthForm = () => {
 						<Typography
 							fontSize={20}
 							align='center'
-							marginBottom={2}
+							marginBottom={3}
 							className={classes.paragraph}
 						>
 							Sign in with Google:
 						</Typography>
+
 						<GoogleLogin
 							className={classes.googleLogin}
 							clientId={googleClientId}
-							buttonText='Log in with Google'
 							onSuccess={handleGoogleAuth}
 							onFailure={(error) => {
 								console.error(error);
 							}}
 							cookiePolicy={'single_host_origin'}
-						/>
+						>
+							<Typography fontSize={18} fontWeight={700}>
+								Log in with Google
+							</Typography>
+						</GoogleLogin>
 					</Grid>
 					<Grid item>
 						<Typography
 							fontSize={20}
 							align='center'
-							marginBottom={2}
+							marginBottom={3}
 							className={classes.paragraph}
 						>
 							Sign in with Facebook:
@@ -143,10 +150,9 @@ const AuthForm = () => {
 	}
 
 	return (
-		<div>
-			<div>Authorized</div>
-			<div>Welcome: {auth.user.username}</div>
-		</div>
+		<>
+			<Navigate to='/articles' replace={true} />
+		</>
 	);
 };
 

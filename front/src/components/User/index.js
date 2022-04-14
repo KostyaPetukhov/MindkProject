@@ -1,21 +1,22 @@
 import React from 'react';
-import { Link, ListItemText } from '@mui/material';
-
-import UserPropTypes from '../../PropTypes/UserPropTypes';
-import './style.css';
+import PropTypes from 'prop-types';
+import { Link, List, ListItemText } from '@mui/material';
 
 const User = (props) => {
 	const { name, id } = props;
 
 	return (
-		<div className='usersList'>
+		<List>
 			<Link underline='hover' href={`/users/${id}`}>
 				<ListItemText primary={name} />
 			</Link>
-		</div>
+		</List>
 	);
 };
 
-User.propTypes = UserPropTypes;
+User.propTypes = {
+	id: PropTypes.number.isRequired,
+	name: PropTypes.string.isRequired,
+};
 
 export default User;

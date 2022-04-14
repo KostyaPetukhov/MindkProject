@@ -1,6 +1,8 @@
 import React from 'react';
-import { Box, Grid, Typography } from '@mui/material';
-import AuthForm from '../Auth';
+import Box from '@mui/material/Box';
+import Grid from '@mui/material/Grid';
+import Typography from '@mui/material/Typography';
+import AuthForm from '../Forms/AuthForm';
 import { makeStyles } from '@material-ui/styles';
 
 const useStyles = makeStyles(() => ({
@@ -8,7 +10,7 @@ const useStyles = makeStyles(() => ({
 		flexGrow: 1,
 	},
 	content: {
-		marginTop: 250,
+		marginTop: 200,
 		textAlign: 'center',
 		flexGrow: 1,
 	},

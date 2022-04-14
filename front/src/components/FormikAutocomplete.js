@@ -1,7 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Autocomplete from '@mui/material/Autocomplete';
-import TextField from '@material-ui/core/TextField';
+
+import TextField from '@mui/material/TextField';
+
 import { fieldToTextField } from 'formik-mui';
 
 const FormikAutocomplete = (props) => {
@@ -9,22 +11,24 @@ const FormikAutocomplete = (props) => {
 		form: { setTouched, setFieldValue },
 	} = props;
 	const { error, helperText, ...field } = fieldToTextField(props);
-	const { name } = field;
+	const { name, value } = field;
 
 	return (
 		<Autocomplete
 			{...props}
 			{...field}
 			isOptionEqualToValue={(option, value) => option.id === value.id}
-			getOptionLabel={(option) => (option.label ? option.label : 'All')}
+			getOptionLabel={(option) => (option.label ? option.label : value)}
 			onChange={(_, value) => setFieldValue(name, value)}
 			onBlur={() => setTouched({ [name]: true })}
+			// defaultValue={value || 'All'}
 			renderInput={(props) => (
 				<TextField
 					{...props}
+					variant='outlined'
 					helperText={helperText}
 					error={error}
-					label='Visible to'
+					label='Available to'
 				/>
 			)}
 		/>

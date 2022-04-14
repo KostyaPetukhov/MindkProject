@@ -1,18 +1,26 @@
 import React from 'react';
 import { useQuery } from 'react-query';
 
-import Articles from '../../components/Articles';
-import { getArticles } from './api/crud';
+import { getAllArticles } from './api/crud';
+import ArticlesList from '../ArticlesList';
+import Spinner from '../../components/Spinner';
+import ErrorMessage from '../../components/ErrorMessage';
 
 const ArticlesContainer = () => {
-	const { isFetching, data } = useQuery('articles', () => getArticles());
+	const { isFetching, isLoadingError, data } = useQuery(
+		['amount-articles'],
+		() => getAllArticles()
+	);
+
 	const articles = data?.data || [];
+	const amount = articles.length;
 
 	return (
-		<div>
-			{isFetching && <div>Loading..</div>}
-			<Articles articles={articles} />
-		</div>
+		<>
+			{isFetching && <Spinner />}
+			{isLoadingError && <ErrorMessage />}
+			<ArticlesList amountArticles={amount} />
+		</>
 	);
 };
 

@@ -1,0 +1,53 @@
+.addArticle {
+	display: flex;
+	flex-direction: column;
+	width: 500px;
+	margin: 30px auto;
+}
+
+.textarea {
+	margin-top: 15px;
+	width: 500px;
+}
+.buttonBlock {
+	display: flex;
+	justify-content: space-between;
+	margin-top: 30px;
+	margin-bottom: 10px;
+}
+
+.error {
+	color: #e53e3e;
+	margin-top: 5px;
+}
+
+.avatarForm {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	margin-top: 20px;
+}
+
+.userProfile {
+	display: flex;
+	flex-direction: row;
+	width: 500px;
+	margin: 30px auto;
+}
+
+.field {
+	font-size: 18px;
+	font-weight: 200;
+	text-align: left;
+	margin: 10px;
+}
+
+.blockWithSelect {
+	display: flex;
+	padding-bottom: 16px;
+}
+
+.select {
+	width: 150px;
+	margin-left: 10px;
+}

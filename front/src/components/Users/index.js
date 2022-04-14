@@ -7,7 +7,7 @@ const Users = (props) => {
 	const { users } = props;
 
 	return (
-		<div>
+		<div style={{ marginTop: '80px' }}>
 			<h2>Users:</h2>
 			{users.map(({ id, username }) => (
 				<User key={id} id={id} name={username} />

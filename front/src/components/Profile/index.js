@@ -1,125 +1,110 @@
 import React from 'react';
-import { Formik, Form, Field } from 'formik';
-import * as Yup from 'yup';
-import { useMutation } from 'react-query';
-import { TextField } from 'formik-mui';
-import { Button, Box } from '@mui/material';
-import { editUserProfile } from '../../containers/Users/api/crud';
-import FormikAutocomplete from '../FormikAutocomplete';
+import PropTypes from 'prop-types';
+import { makeStyles } from '@material-ui/styles';
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
 
-import './style.css';
-import ProfilePropTypes from '../../PropTypes/ProfilePropTypes';
+import UserProfileForm from '../Forms/UserProfileForm';
+import UserAvatarForm from '../Forms/UserAvatarForm';
+
+const useStyles = makeStyles(() => ({
+	root: {
+		flexGrow: 1,
+	},
+	title: {
+		flexGrow: 1,
+	},
+	page: {
+		marginTop: 80,
+	},
+	icons: {
+		fontSize: 'small',
+		marginRight: 5,
+	},
+	closeIcon: {
+		position: 'absolute',
+		left: '91%',
+		top: '2%',
+		color: 'inherit',
+	},
+	profile: {
+		display: 'flex',
+		flexDirection: 'row',
+		width: '600px',
+		margin: '30px auto',
+		color: 'rgba(0, 0, 0, 0.87)',
+	},
+	userInfo: {
+		width: '80%',
+	},
+	userAvatar: {
+		width: '20%',
+		paddingTop: '30px',
+	},
+}));
 
 const Profile = (props) => {
-	const { id } = props;
-
-	const schema = Yup.object().shape({
-		nickname: Yup.string().min(2, 'At least two signs!'),
-		name: Yup.string()
-			.required('Required field!')
-			.min(2, 'At least two signs'),
-		email: Yup.string()
-			.email('Type a correct email')
-			.required('Required field!'),
-		phone: Yup.string()
-			.required('Required field!')
-			.matches(
-				/^[+]380[\d]{9}$/,
-				'Enter phone number in the format: +380xxxxxxxxx'
-			),
-	});
-
-	const mutation = useMutation((data) => editUserProfile(id, data));
-
-	const onFormSubmit = (data) => {
-		mutation.mutate({
-			id: data.userid,
-			username: data.name,
-			pagename: data.nickname,
-			email: data.email,
-			phone: data.phone,
-			emailvisibility: data.emailvisibility.value,
-			phonevisibility: data.phonevisibility.value,
-		});
-	};
-
-	const options = [
-		{ value: 'all', label: 'All' },
-		{ value: 'friends', label: 'Friends' },
-		{ value: 'me', label: 'Only Me' },
-	];
+	const { userProfile } = props;
+	const classes = useStyles();
 
 	return (
-		<div>
-			<Formik
-				initialValues={{
-					...props,
-				}}
-				onSubmit={onFormSubmit}
-				validationSchema={schema}
-			>
-				<div className='userProfile'>
-					<Form>
-						<Box margin={1}>
-							<Field
-								label='Page name:'
-								component={TextField}
-								type='input'
-								name='nickname'
+		<Box className={classes.page}>
+			{userProfile.map(
+				({
+					id,
+					username,
+					pagename,
+					email,
+					phone,
+					university,
+					avatar,
+					usernamevisibility,
+					pagenamevisibility,
+					emailvisibility,
+					phonevisibility,
+					universityvisibility,
+				}) => (
+					<Box key={id} className={classes.profile}>
+						<Box className={classes.userInfo}>
+							<Typography
+								paragraph
+								fontSize={28}
+								color='#000000de'
+							>
+								Profile
+							</Typography>
+							<Box>
+								<UserProfileForm
+									id={id}
+									nickname={pagename}
+									name={username}
+									phone={phone}
+									email={email}
+									university={university}
+									namevisibility={usernamevisibility}
+									nicknamevisibility={pagenamevisibility}
+									emailvisibility={emailvisibility}
+									phonevisibility={phonevisibility}
+									universityvisibility={universityvisibility}
+								/>
+							</Box>
+						</Box>
+						<Box className={classes.userAvatar}>
+							<UserAvatarForm
+								id={id}
+								avatar={avatar}
+								name={username}
 							/>
 						</Box>
-						<Box margin={1}>
-							<Field
-								label='Name:'
-								component={TextField}
-								type='input'
-								name='name'
-							/>
-						</Box>
-						<Box margin={1} className='blockWithSelect'>
-							<Field
-								label='Email:'
-								component={TextField}
-								type='email'
-								name='email'
-							/>
-							<Field
-								className='select'
-								component={FormikAutocomplete}
-								name='emailvisibility'
-								options={options}
-								value={options.value}
-							/>
-						</Box>
-						<Box margin={1} className='blockWithSelect'>
-							<Field
-								className='info'
-								label='Phone number:'
-								component={TextField}
-								type='input'
-								name='phone'
-							/>
-							<Field
-								className='select'
-								component={FormikAutocomplete}
-								name='phonevisibility'
-								options={options}
-								value={options.value}
-							/>
-						</Box>
-						<div className='buttonBlock'>
-							<Button variant='outlined'>Cancel</Button>
-							<Button variant='contained' type='submit'>
-								Edit
-							</Button>
-						</div>
-					</Form>
-				</div>
-			</Formik>
-		</div>
+					</Box>
+				)
+			)}
+		</Box>
 	);
 };
 
-Profile.propTypes = ProfilePropTypes;
+Profile.propTypes = {
+	userProfile: PropTypes.array,
+};
 
 export default Profile;
