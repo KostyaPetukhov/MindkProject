@@ -4,6 +4,8 @@ const fileMiddleware = require('../middleware/file');
 const asyncErrorHandler = require('../middleware/asyncErrorHandler');
 const userService = require('../services/store/users.service');
 const authMiddleware = require('../middleware/auth');
+const aclMiddleware = require('../middleware/acl');
+const aclConfig = require('../services/acl.config');
 
 router.get(
 	'/',
@@ -82,9 +84,17 @@ router.post(
 router.put(
 	'/:id',
 	authMiddleware,
+	aclMiddleware([
+		{
+			resource: aclConfig.Resources.USER,
+			action: aclConfig.Action.UPDATE,
+			possesion: aclConfig.Possesion.OWN,
+			getResource: (req) => userService.getUser(req.params.id),
+			isOwn: (resource, userId) => resource.id === userId,
+		},
+	]),
 	asyncErrorHandler(async (req, res) => {
-		const id = req.params.id;
-		// const id = req.auth.id;
+		const id = req.auth.id;
 		const userProfile = req.body;
 
 		const editUser = await userService.editUser(id, userProfile);
@@ -99,6 +109,15 @@ router.put(
 router.delete(
 	'/:id',
 	authMiddleware,
+	aclMiddleware([
+		{
+			resource: aclConfig.Resources.USER,
+			action: aclConfig.Action.DELETE,
+			possesion: aclConfig.Possesion.ANY,
+			getResource: (req) => userService.getUser(req.params.id),
+			isOwn: (resource, userId) => resource.id === userId,
+		},
+	]),
 	asyncErrorHandler(async (req, res) => {
 		const id = req.params.id;
 

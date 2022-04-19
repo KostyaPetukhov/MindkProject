@@ -2,7 +2,6 @@ const jwt = require('jsonwebtoken');
 const config = require('../services/config');
 const UnauthorizedException = require('../errors/UnathorizedException');
 
-// eslint-disable-next-line consistent-return
 module.exports = async (req, res, next) => {
 	console.log('reqHeaders:', req.headers);
 	if (req.headers.authorization) {
@@ -10,12 +9,11 @@ module.exports = async (req, res, next) => {
 		let decoded;
 		try {
 			decoded = await new Promise((resolve, reject) => {
-				// eslint-disable-next-line consistent-return
 				jwt.verify(token, config.appKey, (err, result) => {
 					if (err) {
 						return reject(err);
 					}
-					resolve(result);
+					return resolve(result);
 				});
 			});
 		} catch (e) {
@@ -28,5 +26,5 @@ module.exports = async (req, res, next) => {
 		}
 	}
 
-	next(new UnauthorizedException());
+	return next(new UnauthorizedException());
 };
