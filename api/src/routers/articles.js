@@ -2,6 +2,8 @@ const router = require('express').Router();
 const articlesService = require('../services/store/articles.service');
 const asyncErrorHandler = require('../middleware/asyncErrorHandler');
 const authMiddleware = require('../middleware/auth');
+const aclMiddleware = require('../middleware/acl');
+const aclConfig = require('../services/acl.config');
 
 router.get(
 	'/',
@@ -48,8 +50,6 @@ router.get(
 		);
 		if (articleComments && Object.keys(articleComments).length) {
 			res.status(200).send(articleComments);
-		} else {
-			res.status(404).send('Comments not found');
 		}
 	})
 );
@@ -91,7 +91,15 @@ router.post(
 router.put(
 	'/:id',
 	authMiddleware,
-
+	aclMiddleware([
+		{
+			resource: aclConfig.Resources.ARTICLE,
+			action: aclConfig.Action.UPDATE,
+			possesion: aclConfig.Possesion.OWN,
+			getResource: (req) => articlesService.getArticle(req.params.id),
+			isOwn: (resource, userId) => resource.userid === userId,
+		},
+	]),
 	asyncErrorHandler(async (req, res) => {
 		const id = req.params.id;
 		const articleData = req.body;
@@ -108,6 +116,15 @@ router.put(
 router.delete(
 	'/:id',
 	authMiddleware,
+	aclMiddleware([
+		{
+			resource: aclConfig.Resources.ARTICLE,
+			action: aclConfig.Action.DELETE,
+			possesion: aclConfig.Possesion.OWN,
+			getResource: (req) => articlesService.getArticle(req.params.id),
+			isOwn: (resource, userId) => resource.userid === userId,
+		},
+	]),
 	asyncErrorHandler(async (req, res) => {
 		const id = req.params.id;
 

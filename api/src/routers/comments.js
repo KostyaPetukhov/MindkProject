@@ -2,6 +2,8 @@ const router = require('express').Router();
 const commentServices = require('../services/store/comments.services');
 const asyncErrorHandler = require('../middleware/asyncErrorHandler');
 const authMiddleware = require('../middleware/auth');
+const aclMiddleware = require('../middleware/acl');
+const aclConfig = require('../services/acl.config');
 
 router.get(
 	'/',
@@ -52,6 +54,15 @@ router.post(
 router.put(
 	'/:id',
 	authMiddleware,
+	aclMiddleware([
+		{
+			resource: aclConfig.Resources.COMMENT,
+			action: aclConfig.Action.UPDATE,
+			possesion: aclConfig.Possesion.OWN,
+			getResource: (req) => commentServices.getComment(req.params.id),
+			isOwn: (resource, userId) => resource.userid === userId,
+		},
+	]),
 	asyncErrorHandler(async (req, res) => {
 		const id = req.params.id;
 		const comment = req.body;
@@ -68,6 +79,15 @@ router.put(
 router.delete(
 	'/:id',
 	authMiddleware,
+	aclMiddleware([
+		{
+			resource: aclConfig.Resources.COMMENT,
+			action: aclConfig.Action.DELETE,
+			possesion: aclConfig.Possesion.OWN,
+			getResource: (req) => commentServices.getComment(req.params.id),
+			isOwn: (resource, userId) => resource.userid === userId,
+		},
+	]),
 	asyncErrorHandler(async (req, res) => {
 		const id = req.params.id;
 
