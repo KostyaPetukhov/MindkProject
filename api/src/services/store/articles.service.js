@@ -25,12 +25,22 @@ module.exports = {
 		db.select().from('articles').where({ id }).orderBy('id'),
 
 	getArticleComments: async (articleid, limit, offset) =>
-		db
-			.select()
-			.from('comments')
+		db('comments as c')
+			.select(
+				'c.id',
+				'c.commenttitle',
+				'c.commentcreatedat',
+				'c.commentupdatedat',
+				'c.commentanswerid',
+				'u.username as user',
+				'u.id as userId',
+				'u.avatar as avatar'
+			)
+			.leftJoin('users as u', 'c.userid', '=', 'u.id')
 			.where({ articleid })
 			.limit(limit)
-			.offset(offset),
+			.offset(offset)
+			.orderBy('commentcreatedat', 'desc'),
 
 	getArticlesLikes: async (articleid) =>
 		db.select().from('likes').where({ articleid }),
