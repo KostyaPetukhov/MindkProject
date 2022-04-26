@@ -7,7 +7,7 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Menu from '@mui/material/Menu';
 import CardHeader from '@mui/material/CardHeader';
-import EditArticle from '../../components/EditArticle';
+import EditArticle from '../Modals/EditArticleModal';
 import ArticleHeaderPropTypes from '../../PropTypes/ArticleHeaderPropTypes';
 
 const ArticleHeader = (props) => {

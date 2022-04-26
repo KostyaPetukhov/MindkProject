@@ -79,7 +79,7 @@ const ArticlesList = (props) => {
 									visibility={visibility}
 								/>
 								<CardContent>
-									<Typography paragraph fontSize={18}>
+									<Typography fontSize={18}>
 										{articletitle}
 									</Typography>
 								</CardContent>

@@ -12,6 +12,10 @@ export const getArticle = async (id) => {
 	return apiClient.get(`/articles/${id}`);
 };
 
+export const getArticleComments = async (id) => {
+	return apiClient.get(`/articles/${id}/comments`);
+};
+
 export const addArticle = async (data) => {
 	return apiClient.post('/articles', data);
 };

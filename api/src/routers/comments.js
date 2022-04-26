@@ -37,10 +37,13 @@ router.post(
 	'/',
 	authMiddleware,
 	asyncErrorHandler(async (req, res) => {
-		const addComment = await commentServices.addComment({
-			...req.body,
-			userid: req.auth.id,
-		});
+		const commentData = req.body;
+		const userid = req.auth.id;
+
+		const addComment = await commentServices.addComment(
+			commentData,
+			userid
+		);
 		if (addComment && Object.keys(addComment).length) {
 			res.status(201).send('Created new comment');
 		} else {

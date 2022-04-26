@@ -48,8 +48,6 @@ router.get(
 		);
 		if (articleComments && Object.keys(articleComments).length) {
 			res.status(200).send(articleComments);
-		} else {
-			res.status(404).send('Comments not found');
 		}
 	})
 );

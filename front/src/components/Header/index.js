@@ -15,15 +15,13 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogActions from '@mui/material/DialogActions';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
-import IconButton from '@mui/material/IconButton';
 
 import PersonIcon from '@mui/icons-material/Person';
 import LogoutIcon from '@mui/icons-material/Logout';
-import CloseIcon from '@mui/icons-material/Close';
 
 import { makeStyles } from '@material-ui/styles';
 import AuthForm from '../Forms/AuthForm';
-import AddArticleForm from '../Forms/AddArticleForm';
+import AddArticleModal from '../Modals/AddArticleMoal';
 
 const useStyles = makeStyles(() => ({
 	root: {
@@ -135,35 +133,7 @@ const Header = () => {
 						<Toolbar>
 							<Typography variant='h6'>Mindk DevCamp</Typography>
 							<Box className={classes.addArticle}>
-								<Button
-									color='inherit'
-									variant='outlined'
-									onClick={handleOpenModal}
-								>
-									Add Article
-								</Button>
-								<Dialog
-									open={openModal}
-									onClose={handleCloseModal}
-									aria-labelledby='add-article-form'
-								>
-									<Box className={classes.closeIcon}>
-										<IconButton onClick={handleCloseModal}>
-											<CloseIcon />
-										</IconButton>
-									</Box>
-									<DialogTitle
-										id='add-article-form'
-										marginTop={1}
-									>
-										Add Article
-									</DialogTitle>
-									<DialogContent>
-										<AddArticleForm
-											closeModal={handleCloseModal}
-										/>
-									</DialogContent>
-								</Dialog>
+								<AddArticleModal />
 							</Box>
 							<Box marginRight={1}>
 								<Avatar
