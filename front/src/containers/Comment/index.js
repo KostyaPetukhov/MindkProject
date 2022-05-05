@@ -15,29 +15,9 @@ const CommentsContainer = (props) => {
 
 	return (
 		<>
-			{comments.map(
-				({
-					id,
-					user,
-					userId,
-					avatar,
-					commenttitle,
-					commentcreatedat,
-					commentanswerid,
-				}) => (
-					<Comment
-						key={id}
-						id={id}
-						content={commenttitle}
-						createdAt={commentcreatedat}
-						author={user}
-						authorId={userId}
-						authorAvatar={avatar}
-						articleId={articleId}
-						answerId={commentanswerid}
-					/>
-				)
-			)}
+			{comments.map((item) => (
+				<Comment key={item.id} articleId={articleId} {...item} />
+			))}
 		</>
 	);
 };

@@ -46,59 +46,23 @@ const useStyles = makeStyles(() => ({
 const Profile = (props) => {
 	const { userProfile } = props;
 	const classes = useStyles();
-
 	return (
 		<Box className={classes.page}>
-			{userProfile.map(
-				({
-					id,
-					username,
-					pagename,
-					email,
-					phone,
-					university,
-					avatar,
-					usernamevisibility,
-					pagenamevisibility,
-					emailvisibility,
-					phonevisibility,
-					universityvisibility,
-				}) => (
-					<Box key={id} className={classes.profile}>
-						<Box className={classes.userInfo}>
-							<Typography
-								paragraph
-								fontSize={28}
-								color='#000000de'
-							>
-								Profile
-							</Typography>
-							<Box>
-								<UserProfileForm
-									id={id}
-									nickname={pagename}
-									name={username}
-									phone={phone}
-									email={email}
-									university={university}
-									namevisibility={usernamevisibility}
-									nicknamevisibility={pagenamevisibility}
-									emailvisibility={emailvisibility}
-									phonevisibility={phonevisibility}
-									universityvisibility={universityvisibility}
-								/>
-							</Box>
-						</Box>
-						<Box className={classes.userAvatar}>
-							<UserAvatarForm
-								id={id}
-								avatar={avatar}
-								name={username}
-							/>
+			{userProfile.map((item) => (
+				<Box key={item.id} className={classes.profile}>
+					<Box className={classes.userInfo}>
+						<Typography paragraph fontSize={28} color='#000000de'>
+							Profile
+						</Typography>
+						<Box>
+							<UserProfileForm {...item} />
 						</Box>
 					</Box>
-				)
-			)}
+					<Box className={classes.userAvatar}>
+						<UserAvatarForm {...item} />
+					</Box>
+				</Box>
+			))}
 		</Box>
 	);
 };

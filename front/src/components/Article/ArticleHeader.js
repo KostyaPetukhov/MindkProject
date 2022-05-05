@@ -13,11 +13,12 @@ import ArticleHeaderPropTypes from '../../PropTypes/ArticleHeaderPropTypes';
 const ArticleHeader = (props) => {
 	const {
 		id,
-		content,
-		author,
-		authorAvatar,
-		createdAt,
-		updatedAt,
+		articletitle: content,
+		user: author,
+		avatar: authorAvatar,
+		articlecreatedat: createdAt,
+		articleupdatedat: updatedAt,
+		authorId,
 		visibility,
 	} = props;
 
@@ -43,9 +44,11 @@ const ArticleHeader = (props) => {
 					/>
 				}
 				action={
-					<IconButton aria-label='settings' onClick={handleClick}>
-						<MoreVertIcon />
-					</IconButton>
+					authorId === 7 && (
+						<IconButton aria-label='settings' onClick={handleClick}>
+							<MoreVertIcon />
+						</IconButton>
+					)
 				}
 				title={
 					<Typography fontSize={18} color='primary'>

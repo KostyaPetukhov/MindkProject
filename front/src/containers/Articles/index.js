@@ -19,7 +19,7 @@ const ArticlesContainer = () => {
 		<>
 			{isFetching && <Spinner />}
 			{isLoadingError && <ErrorMessage />}
-			<ArticlesList amountArticles={amount} />
+			<ArticlesList amountArticles={amount} articlesList={articles} />
 		</>
 	);
 };

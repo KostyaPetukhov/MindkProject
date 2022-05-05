@@ -18,23 +18,36 @@ function App() {
 		};
 	}, []);
 
+	// eslint-disable-next-line no-unused-vars
 	const [userData, setUserData] = useState({
 		isAuth: false,
 		user: null,
 		setUserData: () => {},
 	});
 
-	const changeContext = () => {
-		setUserData({
-			isAuth: true,
-			user: {
-				id: 1,
-				name: 'Kostya Petukhov',
-				email: 'kostya3241@gmail.com',
-			},
-			setUserData,
-		});
-	};
+	const routes = [
+		{
+			path: '/',
+			component: GuestPage,
+		},
+
+		{
+			path: '/articles',
+			component: ArticlesContainer,
+		},
+		{
+			path: '/users',
+			component: UsersContainer,
+		},
+		{
+			path: '/users/:id',
+			component: UserProfileContainer,
+		},
+		{
+			path: '*',
+			component: PageNotFound,
+		},
+	];
 
 	return (
 		<div className='App'>
@@ -43,52 +56,20 @@ function App() {
 					<Header />
 				</ErrorBoundary>
 				<Routes>
-					<Route
-						path='/'
-						element={
-							<ErrorBoundary>
-								<GuestPage />
-							</ErrorBoundary>
-						}
-					/>
-
-					<Route
-						path='/context'
-						element={
-							<div>
-								Home Page
-								<button onClick={changeContext}>
-									Change context
-								</button>
-							</div>
-						}
-					/>
-
-					<Route
-						path='/articles'
-						element={
-							<ErrorBoundary>
-								<ArticlesContainer />
-							</ErrorBoundary>
-						}
-					/>
-					<Route
-						path='/users'
-						element={
-							<ErrorBoundary>
-								<UsersContainer />
-							</ErrorBoundary>
-						}
-					/>
-					<Route
-						path='/users/:id'
-						element={
-							<ErrorBoundary>
-								<UserProfileContainer />
-							</ErrorBoundary>
-						}
-					/>
-					<Route path='*' element={<PageNotFound />} />
+					{routes.map((item, index) => {
+						const Component = item.component;
+						return (
+							<Route
+								key={index}
+								path={item.path}
+								element={
+									<ErrorBoundary>
+										<Component />
+									</ErrorBoundary>
+								}
+							/>
+						);
+					})}
 				</Routes>
 			</authContext.Provider>
 		</div>

@@ -16,13 +16,13 @@ import ReplyComment from '../Modals/ReplyCommentModal';
 const Comment = (props) => {
 	const {
 		id,
-		author,
-		authorId,
-		authorAvatar,
-		content,
-		createdAt,
+		user: author,
+		userId: authorId,
+		avatar: authorAvatar,
+		commenttitle: content,
+		commentcreatedat: createdAt,
 		articleId,
-		answerId,
+		commentanswerid: answerId,
 	} = props;
 
 	const [anchorEl, setAnchorEl] = useState(null);
@@ -34,155 +34,95 @@ const Comment = (props) => {
 	const handleClose = () => {
 		setAnchorEl(null);
 	};
-	if (authorId != 7) {
-		return (
-			<Paper elevation={4} sx={{ margin: 2 }}>
-				<Box
-					sx={{
-						display: 'flex',
-						justifyContent: 'space-between',
-						padding: 2,
-					}}
-				>
-					<Box sx={{ display: 'flex', padding: 1 }}>
-						<Box padding={0.5}>
-							<Avatar
-								src={authorAvatar}
-								alt={author}
-								sx={{ width: 35, height: 35 }}
-							/>
-						</Box>
-						<Box marginLeft={1}>
-							{answerId ? (
-								<CommentReplyHeaderContainer
-									commentId={answerId}
-									commentAuthor={author}
-								/>
-							) : (
-								<Typography fontSize={18} color='primary'>
-									{author}
-								</Typography>
-							)}
 
-							<Box sx={{ display: 'flex', flexDirection: 'row' }}>
-								<Typography fontSize={14} color='#00000099'>
-									{createdAt
-										.slice(0, 10)
-										.split('-')
-										.reverse()
-										.join('.')}
-								</Typography>
-								<Typography
-									marginLeft={2}
-									fontSize={14}
-									color='#00000099'
-								>
-									{createdAt.slice(11, 16)}
-								</Typography>
-							</Box>
+	return (
+		<Paper elevation={4} sx={{ margin: 2 }}>
+			<Box
+				sx={{
+					display: 'flex',
+					justifyContent: 'space-between',
+					padding: 2,
+				}}
+			>
+				<Box sx={{ display: 'flex', padding: 1 }}>
+					<Box padding={0.5}>
+						<Avatar
+							src={authorAvatar}
+							alt={author}
+							sx={{ width: 35, height: 35 }}
+						/>
+					</Box>
+					<Box marginLeft={1}>
+						{answerId ? (
+							<CommentReplyHeaderContainer
+								commentId={answerId}
+								commentAuthor={author}
+							/>
+						) : (
+							<Typography fontSize={18} color='primary'>
+								{author}
+							</Typography>
+						)}
+
+						<Box sx={{ display: 'flex', flexDirection: 'row' }}>
+							<Typography fontSize={14} color='#00000099'>
+								{createdAt
+									.slice(0, 10)
+									.split('-')
+									.reverse()
+									.join('.')}
+							</Typography>
+							<Typography
+								marginLeft={2}
+								fontSize={14}
+								color='#00000099'
+							>
+								{createdAt.slice(11, 16)}
+							</Typography>
 						</Box>
 					</Box>
+				</Box>
+				{authorId === 7 ? (
+					<IconButton aria-label='settings' onClick={handleClick}>
+						<MoreVertIcon />
+					</IconButton>
+				) : (
 					<Box marginTop={2}>
 						<ReplyComment articleId={articleId} commentId={id} />
 					</Box>
-				</Box>
-				<Box
-					sx={{
-						display: 'flex',
-						flexDirection: 'row',
-					}}
+				)}
+			</Box>
+			<Box>
+				<Typography
+					marginLeft={4}
+					marginBottom={2}
+					paddingBottom={2}
+					fontSize={18}
 				>
-					<Typography marginLeft={4} marginBottom={2} fontSize={18}>
-						{content}
-					</Typography>
-				</Box>
-			</Paper>
-		);
-	} else {
-		return (
-			<Paper
-				elevation={4}
-				sx={{
-					margin: 2,
-				}}
-			>
-				<Box
-					sx={{
-						display: 'flex',
-						justifyContent: 'space-between',
-						padding: 2,
-					}}
-				>
-					<Box sx={{ display: 'flex', padding: 1 }}>
-						<Box padding={0.5}>
-							<Avatar
-								src={authorAvatar}
-								alt={author}
-								sx={{ width: 35, height: 35 }}
-							/>
-						</Box>
-						<Box marginLeft={1}>
-							{answerId ? (
-								<CommentReplyHeaderContainer
-									commentId={answerId}
-									commentAuthor={author}
-								/>
-							) : (
-								<Typography fontSize={18} color='primary'>
-									{author}
-								</Typography>
-							)}
-							<Box sx={{ display: 'flex', flexDirection: 'row' }}>
-								<Typography fontSize={14} color='#00000099'>
-									{createdAt
-										.slice(0, 10)
-										.split('-')
-										.reverse()
-										.join('.')}
-								</Typography>
-								<Typography
-									marginLeft={2}
-									fontSize={14}
-									color='#00000099'
-								>
-									{createdAt.slice(11, 16)}
-								</Typography>
-							</Box>
-						</Box>
-					</Box>
-					<Box>
-						<IconButton aria-label='settings' onClick={handleClick}>
-							<MoreVertIcon />
-						</IconButton>
-					</Box>
-				</Box>
-
-				<Typography marginLeft={4} paddingBottom={2} fontSize={18}>
 					{content}
 				</Typography>
-
-				<Menu
-					anchorEl={anchorEl}
-					open={Boolean(anchorEl)}
-					onClose={handleClose}
-					anchorOrigin={{
-						vertical: 'bottom',
-						horizontal: 'center',
-					}}
-					transformOrigin={{
-						vertical: 'top',
-						horizontal: 'left',
-					}}
-				>
-					<EditComment
-						id={id}
-						content={content}
-						closeMenu={handleClose}
-					/>
-				</Menu>
-			</Paper>
-		);
-	}
+			</Box>
+			<Menu
+				anchorEl={anchorEl}
+				open={Boolean(anchorEl)}
+				onClose={handleClose}
+				anchorOrigin={{
+					vertical: 'bottom',
+					horizontal: 'center',
+				}}
+				transformOrigin={{
+					vertical: 'top',
+					horizontal: 'left',
+				}}
+			>
+				<EditComment
+					id={id}
+					content={content}
+					closeMenu={handleClose}
+				/>
+			</Menu>
+		</Paper>
+	);
 };
 
 Comment.propTypes = CommentPropTypes;

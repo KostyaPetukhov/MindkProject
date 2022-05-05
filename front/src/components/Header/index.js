@@ -24,12 +24,6 @@ import AuthForm from '../Forms/AuthForm';
 import AddArticleModal from '../Modals/AddArticleMoal';
 
 const useStyles = makeStyles(() => ({
-	root: {
-		flexGrow: 1,
-	},
-	title: {
-		flexGrow: 1,
-	},
 	addArticle: {
 		flexGrow: 1,
 		display: 'flex',
@@ -44,6 +38,12 @@ const useStyles = makeStyles(() => ({
 		left: '91%',
 		top: '2%',
 		color: 'inherit',
+	},
+	profileItem: {
+		color: '#1976d2 !important',
+	},
+	logoutItem: {
+		color: '#9c27b0 !important',
 	},
 }));
 
@@ -66,15 +66,71 @@ const Header = () => {
 
 	const handleCloseModal = () => setOpenModal(false);
 
-	if (isAuth === false) {
-		return (
-			<>
-				<AppBar position='fixed'>
-					<Container>
-						<Toolbar>
-							<Typography variant='h6' className={classes.title}>
-								Mindk DevCamp
-							</Typography>
+	return (
+		<AppBar position='fixed'>
+			<Container>
+				<Toolbar>
+					<Typography variant='h6'>Mindk DevCamp</Typography>
+					{isAuth ? (
+						<>
+							<Box className={classes.addArticle}>
+								<AddArticleModal />
+							</Box>
+							<Box marginRight={1}>
+								<Avatar
+									alt={name}
+									src={`http://localhost:3333/uploads/1644753990513-Koala.jpg`}
+									sx={{ width: 50, height: 50 }}
+								/>
+							</Box>
+							<Button
+								color='secondary'
+								variant='contained'
+								aria-labelledby='right-menu'
+								onClick={handleOpenPopover}
+							>
+								Ivan Abramov
+							</Button>
+
+							<Menu
+								id='right-menu'
+								anchorEl={popoverElement}
+								open={Boolean(popoverElement)}
+								onClose={handleClosePopover}
+								anchorOrigin={{
+									vertical: 'bottom',
+									horizontal: 'center',
+								}}
+								transformOrigin={{
+									vertical: 'top',
+									horizontal: 'center',
+								}}
+							>
+								<Link to='/users/2'>
+									<MenuItem
+										classes={{
+											root: classes.profileItem,
+										}}
+										className={classes.profileItem}
+										onClick={handleClosePopover}
+									>
+										<PersonIcon className={classes.icons} />
+										Profile
+									</MenuItem>
+								</Link>
+								<Link to='/'>
+									<MenuItem
+										className={classes.logoutItem}
+										onClick={handleClosePopover}
+									>
+										<LogoutIcon className={classes.icons} />
+										Logout
+									</MenuItem>
+								</Link>
+							</Menu>
+						</>
+					) : (
+						<>
 							<Box marginRight={2}>
 								<Button
 									color='inherit'
@@ -120,76 +176,12 @@ const Header = () => {
 									Log Out
 								</Button>
 							</Link>
-						</Toolbar>
-					</Container>
-				</AppBar>
-			</>
-		);
-	} else {
-		return (
-			<>
-				<AppBar position='fixed'>
-					<Container>
-						<Toolbar>
-							<Typography variant='h6'>Mindk DevCamp</Typography>
-							<Box className={classes.addArticle}>
-								<AddArticleModal />
-							</Box>
-							<Box marginRight={1}>
-								<Avatar
-									alt={name}
-									src={`http://localhost:3333/uploads/1644753990513-Koala.jpg`}
-									sx={{ width: 50, height: 50 }}
-								/>
-							</Box>
-							<Button
-								color='secondary'
-								variant='contained'
-								aria-labelledby='right-menu'
-								onClick={handleOpenPopover}
-							>
-								Ivan Abramov
-							</Button>
-
-							<Menu
-								id='right-menu'
-								anchorEl={popoverElement}
-								open={Boolean(popoverElement)}
-								onClose={handleClosePopover}
-								anchorOrigin={{
-									vertical: 'bottom',
-									horizontal: 'center',
-								}}
-								transformOrigin={{
-									vertical: 'top',
-									horizontal: 'center',
-								}}
-							>
-								<Link to='/users/2'>
-									<MenuItem
-										style={{ color: '#1976d2' }}
-										onClick={handleClosePopover}
-									>
-										<PersonIcon className={classes.icons} />
-										Profile
-									</MenuItem>
-								</Link>
-								<Link to='/'>
-									<MenuItem
-										style={{ color: '#9c27b0' }}
-										onClick={handleClosePopover}
-									>
-										<LogoutIcon className={classes.icons} />
-										Logout
-									</MenuItem>
-								</Link>
-							</Menu>
-						</Toolbar>
-					</Container>
-				</AppBar>
-			</>
-		);
-	}
+						</>
+					)}
+				</Toolbar>
+			</Container>
+		</AppBar>
+	);
 };
 
 export default Header;

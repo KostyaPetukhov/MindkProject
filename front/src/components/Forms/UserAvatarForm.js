@@ -26,7 +26,7 @@ const CustomTooltip = styled(({ className, ...props }) => (
 }));
 
 const UserAvatarForm = (props) => {
-	const { id, avatar, name } = props;
+	const { id, avatar, username } = props;
 
 	const [image, setImage] = useState();
 	const [croppedImage, setCroppedImage] = useState();
@@ -99,7 +99,7 @@ const UserAvatarForm = (props) => {
 										onChange={handleChange}
 									/>
 									<Avatar
-										alt={name}
+										alt={username}
 										src={`http://localhost:3333/${avatar}`}
 										sx={{
 											width: 120,
@@ -163,7 +163,7 @@ const UserAvatarForm = (props) => {
 
 UserAvatarForm.propTypes = {
 	id: PropTypes.number,
-	name: PropTypes.string,
+	username: PropTypes.string,
 	avatar: PropTypes.string,
 };
 

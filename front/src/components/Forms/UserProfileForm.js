@@ -19,8 +19,8 @@ const UserProfileForm = (props) => {
 	const { id } = props;
 
 	const schema = Yup.object().shape({
-		nickname: Yup.string().min(2, 'At least two signs!'),
-		name: Yup.string()
+		pagename: Yup.string().min(2, 'At least two signs!'),
+		username: Yup.string()
 			.required('Required field!')
 			.min(2, 'At least two signs'),
 		email: Yup.string()
@@ -41,13 +41,13 @@ const UserProfileForm = (props) => {
 		setSubmitting(true);
 		mutation.mutate({
 			id: data.userid,
-			username: data.name,
-			pagename: data.nickname,
+			username: data.username,
+			pagename: data.pagename,
 			email: data.email,
 			phone: data.phone,
 			university: data.university,
-			usernamevisibility: data.namevisibility.value,
-			pagenamevisibility: data.nicknamevisibility.value,
+			usernamevisibility: data.usernamevisibility.value,
+			pagenamevisibility: data.pagenamevisibility.value,
 			emailvisibility: data.emailvisibility.value,
 			phonevisibility: data.phonevisibility.value,
 			universityvisibility: data.universityvisibility.value,
@@ -80,12 +80,12 @@ const UserProfileForm = (props) => {
 								label='Page name:'
 								component={TextField}
 								type='input'
-								name='nickname'
+								name='pagename'
 							/>
 							<Field
 								className='select'
 								component={FormikAutocomplete}
-								name='nicknamevisibility'
+								name='pagenamevisibility'
 								options={options}
 							/>
 						</Box>
@@ -94,12 +94,12 @@ const UserProfileForm = (props) => {
 								label='Name:'
 								component={TextField}
 								type='input'
-								name='name'
+								name='username'
 							/>
 							<Field
 								className='select'
 								component={FormikAutocomplete}
-								name='namevisibility'
+								name='usernamevisibility'
 								options={options}
 							/>
 						</Box>

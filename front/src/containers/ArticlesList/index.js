@@ -56,49 +56,26 @@ const ArticlesList = (props) => {
 
 	return (
 		<Box className={classes.page}>
-			{isSuccess && (
-				<>
-					{articlesList.map(
-						({
-							id,
-							user,
-							articletitle,
-							articlecreatedat,
-							articleupdatedat,
-							avatar,
-							visibility,
-						}) => (
-							<Card key={id} className={classes.article}>
-								<ArticleHeader
-									id={id}
-									content={articletitle}
-									author={user}
-									authorAvatar={avatar}
-									createdAt={articlecreatedat}
-									updatedAt={articleupdatedat}
-									visibility={visibility}
-								/>
-								<CardContent>
-									<Typography fontSize={18}>
-										{articletitle}
-									</Typography>
-								</CardContent>
-								<ArticleFooter id={id} />
-							</Card>
-						)
-					)}
-					<Button
-						className={classes.loadButton}
-						color='secondary'
-						onClick={() => setPageNumber((page) => page + 1)}
-						disabled={
-							pageNumber * articlesPerPage >= amountArticles
-						}
-					>
-						Load more
-					</Button>
-				</>
-			)}
+			{isSuccess &&
+				articlesList.map((item) => (
+					<Card key={item.id} className={classes.article}>
+						<ArticleHeader {...item} />
+						<CardContent>
+							<Typography fontSize={18}>
+								{item.articletitle}
+							</Typography>
+						</CardContent>
+						<ArticleFooter id={item.id} />
+					</Card>
+				))}
+			<Button
+				className={classes.loadButton}
+				color='secondary'
+				onClick={() => setPageNumber((page) => page + 1)}
+				disabled={pageNumber * articlesPerPage >= amountArticles}
+			>
+				Load more
+			</Button>
 		</Box>
 	);
 };
