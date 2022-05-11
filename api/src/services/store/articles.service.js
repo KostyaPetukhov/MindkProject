@@ -10,6 +10,7 @@ module.exports = {
 				'a.articleupdatedat',
 				'a.visibility',
 				'u.username as user',
+				'u.id as authorId',
 				'u.avatar as avatar'
 			)
 			.leftJoin('users as u', 'a.userid', '=', 'u.id')
@@ -43,7 +44,17 @@ module.exports = {
 			.orderBy('commentcreatedat', 'desc'),
 
 	getArticlesLikes: async (articleid) =>
-		db.select().from('likes').where({ articleid }),
+		db('likes as l')
+			.select(
+				'l.id',
+				'l.articleid',
+				'l.userid',
+				'u.username as user',
+				'u.avatar as avatar'
+			)
+			.leftJoin('users as u', 'l.userid', '=', 'u.id')
+			.where({ articleid })
+			.orderBy('l.id', 'desc'),
 
 	addArticle: async (articleData, userid) =>
 		db

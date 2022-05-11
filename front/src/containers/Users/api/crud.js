@@ -8,6 +8,10 @@ export const getUserProfile = async (id) => {
 	return apiClient.get(`/users/${id}`);
 };
 
+export const getUserLikes = async (id) => {
+	return apiClient.get(`/users/${id}/likes`);
+};
+
 export const editUserProfile = async (id, data) => {
 	return apiClient.put(`/users/${id}`, data);
 };

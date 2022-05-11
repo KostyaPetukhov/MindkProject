@@ -62,8 +62,6 @@ router.get(
 		const articleLikes = await articlesService.getArticlesLikes(articleid);
 		if (articleLikes && Object.keys(articleLikes).length) {
 			res.status(200).send(articleLikes);
-		} else {
-			res.status(404).send('Likes not found');
 		}
 	})
 );

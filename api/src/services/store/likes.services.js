@@ -2,7 +2,12 @@ const db = require('../db');
 
 module.exports = {
 	getAllLikes: async (limit, offset) =>
-		db.select().from('likes').limit(limit).offset(offset).orderBy('id'),
+		db
+			.select()
+			.from('likes')
+			.limit(limit)
+			.offset(offset)
+			.orderBy('id', 'desc'),
 
 	getLike: async (id) =>
 		db.select().from('likes').where({ id }).orderBy('id'),

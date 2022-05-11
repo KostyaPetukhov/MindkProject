@@ -38,6 +38,18 @@ router.get(
 );
 
 router.get(
+	'/:userid/likes',
+	asyncErrorHandler(async (req, res) => {
+		const userid = req.params.userid;
+
+		const userLikes = await userService.getUserLikes(userid);
+		if (userLikes && Object.keys(userLikes).length) {
+			res.status(200).send(userLikes);
+		}
+	})
+);
+
+router.get(
 	'/:id/avatar',
 	asyncErrorHandler(async (req, res) => {
 		const id = req.params.id;

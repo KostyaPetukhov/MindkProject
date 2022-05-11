@@ -4,35 +4,15 @@ import { useQuery } from 'react-query';
 
 import Typography from '@mui/material/Typography';
 import { makeStyles } from '@material-ui/styles';
-// import FavoriteIcon from '@mui/icons-material/Favorite';
 import Box from '@mui/material/Box';
-// import { styled } from '@mui/material/styles';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import CardContent from '@mui/material/CardContent';
 import Collapse from '@mui/material/Collapse';
 
-import Checkbox from '@mui/material/Checkbox';
-import FavoriteBorder from '@mui/icons-material/FavoriteBorder';
-import Favorite from '@mui/icons-material/Favorite';
-
-// import AddArticleForm from '../Forms/AddArticleForm';
 import { getArticleComments } from '../../containers/Articles/api/crud';
 import CommentsContainer from '../../containers/Comment';
-// import LikesContainer from '../../containers/Likes';
+import LikesContainer from '../../containers/Likes';
 import AddCommentModal from '../Modals/AddCommentModal';
-
-// const ExpandMore = styled((props) => {
-// 	// eslint-disable-next-line no-unused-vars
-// 	const { expand, ...other } = props;
-// 	return <IconButton {...other} />;
-// })(({ theme, expand }) => ({
-// 	transform: !expand ? 'rotate(0deg)' : 'rotate(180deg)',
-// 	padding: '0px',
-// 	marginLeft: '0px',
-// 	transition: theme.transitions.create('transform', {
-// 		duration: theme.transitions.duration.shortest,
-// 	}),
-// }));
 
 const useStyles = makeStyles(() => ({
 	footer: {
@@ -86,8 +66,6 @@ const ArticleFooter = (props) => {
 
 	const handleExpandClick = () => setExpanded(!expanded);
 
-	const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
-
 	return (
 		<>
 			<Box className={classes.footer}>
@@ -105,18 +83,10 @@ const ArticleFooter = (props) => {
 				<Box>
 					<AddCommentModal articleId={id} />
 				</Box>
-				{/* <IconButton aria-label='add to favorites'>
-						<FavoriteIcon />
-					</IconButton> */}
-				<Box className={classes.like}>
-					<Checkbox
-						{...label}
-						icon={<FavoriteBorder />}
-						checkedIcon={<Favorite />}
-					/>
-				</Box>
 
-				{/* <LikesContainer articleId={id} /> */}
+				<Box className={classes.like}>
+					<LikesContainer articleId={id} />
+				</Box>
 			</Box>
 			{amount !== 0 && (
 				<Collapse in={expanded} timeout='auto' unmountOnExit>

@@ -91,7 +91,11 @@ const UserAvatarForm = (props) => {
 				<Form className='avatarForm'>
 					<Box>
 						{!image && (
-							<CustomTooltip title='Change avatar' arrow>
+							<CustomTooltip
+								title='Change avatar'
+								arrow
+								disableInteractive
+							>
 								<Button component='label'>
 									<input
 										type='file'

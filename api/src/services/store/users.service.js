@@ -12,6 +12,13 @@ module.exports = {
 	getUserByEmail: async (email) =>
 		db.select().first().where({ email }).from('users'),
 
+	getUserLikes: async (userid) =>
+		db('likes as l')
+			.select('l.id', 'l.articleid', 'l.userid')
+			.leftJoin('users as u', 'l.userid', '=', 'u.id')
+			.where({ userid })
+			.orderBy('l.id', 'desc'),
+
 	addUser: async (userProfile) => db.insert(userProfile).into('users'),
 
 	getUserAvatar: async (id) =>
