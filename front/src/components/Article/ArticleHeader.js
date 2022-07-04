@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 
 import IconButton from '@mui/material/IconButton';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
@@ -7,10 +7,14 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Menu from '@mui/material/Menu';
 import CardHeader from '@mui/material/CardHeader';
+
 import EditArticle from '../Modals/EditArticleModal';
 import ArticleHeaderPropTypes from '../../PropTypes/ArticleHeaderPropTypes';
+import authContext from '../../authContext';
 
 const ArticleHeader = (props) => {
+	const context = useContext(authContext);
+	const authData = context.authData;
 	const {
 		id,
 		articletitle: content,
@@ -44,7 +48,7 @@ const ArticleHeader = (props) => {
 					/>
 				}
 				action={
-					authorId === 7 && (
+					authorId === authData.userId && (
 						<IconButton aria-label='settings' onClick={handleClick}>
 							<MoreVertIcon />
 						</IconButton>

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import { useQuery } from 'react-query';
 
@@ -6,10 +6,14 @@ import { getArticleLikes } from '../Articles/api/crud';
 
 import UserLikes from '../UserLikes';
 import AddLike from '../../components/Like/AddLike';
+import authContext from '../../authContext';
 
 const LikesContainer = (props) => {
 	const { articleId } = props;
-	const userId = 7; // позже подключить к авторизации
+
+	const context = useContext(authContext);
+	const authData = context.authData;
+	const userId = authData.userId;
 
 	const { data } = useQuery(
 		`articles/${articleId}/likes`,

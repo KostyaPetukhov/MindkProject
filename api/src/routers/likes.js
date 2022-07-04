@@ -38,10 +38,9 @@ router.post(
 	authMiddleware,
 	asyncErrorHandler(async (req, res) => {
 		const like = req.body;
-
 		const addLike = await likesServices.addLike({
 			...like,
-			userid: req.auth.id,
+			userid: req.body.userid,
 		});
 		if (addLike && Object.keys(addLike).length) {
 			res.status(201).send('Add like');

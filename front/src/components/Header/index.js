@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
 
 import Avatar from '@mui/material/Avatar';
@@ -22,8 +22,13 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import { makeStyles } from '@material-ui/styles';
 import AuthForm from '../Forms/AuthForm';
 import AddArticleModal from '../Modals/AddArticleMoal';
+import authContext from '../../authContext';
 
 const useStyles = makeStyles(() => ({
+	toolbar: {
+		display: 'flex',
+		justifyContent: 'space-between',
+	},
 	addArticle: {
 		flexGrow: 1,
 		display: 'flex',
@@ -48,7 +53,8 @@ const useStyles = makeStyles(() => ({
 }));
 
 const Header = () => {
-	const isAuth = true;
+	const context = useContext(authContext);
+	const authData = context.authData;
 
 	const classes = useStyles();
 
@@ -69,17 +75,17 @@ const Header = () => {
 	return (
 		<AppBar position='fixed'>
 			<Container>
-				<Toolbar>
+				<Toolbar className={classes.toolbar}>
 					<Typography variant='h6'>Mindk DevCamp</Typography>
-					{isAuth ? (
+					{authData.isAuth ? (
 						<>
 							<Box className={classes.addArticle}>
 								<AddArticleModal />
 							</Box>
 							<Box marginRight={1}>
 								<Avatar
-									alt={name}
-									src={`http://localhost:3333/uploads/1644753990513-Koala.jpg`}
+									alt={authData.userName}
+									src={`${authData.userAvatar}`}
 									sx={{ width: 50, height: 50 }}
 								/>
 							</Box>
@@ -89,7 +95,7 @@ const Header = () => {
 								aria-labelledby='right-menu'
 								onClick={handleOpenPopover}
 							>
-								Ivan Abramov
+								{authData.userName}
 							</Button>
 
 							<Menu
@@ -106,7 +112,7 @@ const Header = () => {
 									horizontal: 'center',
 								}}
 							>
-								<Link to='/users/2'>
+								<Link to={`/users/${authData.userId}`}>
 									<MenuItem
 										classes={{
 											root: classes.profileItem,
@@ -131,7 +137,7 @@ const Header = () => {
 						</>
 					) : (
 						<>
-							<Box marginRight={2}>
+							<Box marginRight={2} className={classes.signButton}>
 								<Button
 									color='inherit'
 									variant='outlined'
@@ -164,18 +170,6 @@ const Header = () => {
 									</DialogActions>
 								</Dialog>
 							</Box>
-							<Box marginRight={2}>
-								<Link to='/users'>
-									<Button color='inherit' variant='outlined'>
-										Log In
-									</Button>
-								</Link>
-							</Box>
-							<Link to='/articles'>
-								<Button color='secondary' variant='contained'>
-									Log Out
-								</Button>
-							</Link>
 						</>
 					)}
 				</Toolbar>

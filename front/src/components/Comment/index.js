@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import CommentPropTypes from '../../PropTypes/CommentPropTypes';
 
 import IconButton from '@mui/material/IconButton';
@@ -12,6 +12,7 @@ import Avatar from '@mui/material/Avatar';
 import CommentReplyHeaderContainer from '../../containers/CommentReplyHeader';
 import EditComment from '../Modals/EditCommentModal';
 import ReplyComment from '../Modals/ReplyCommentModal';
+import authContext from '../../authContext';
 
 const Comment = (props) => {
 	const {
@@ -24,6 +25,9 @@ const Comment = (props) => {
 		articleId,
 		commentanswerid: answerId,
 	} = props;
+
+	const context = useContext(authContext);
+	const authData = context.authData;
 
 	const [anchorEl, setAnchorEl] = useState(null);
 
@@ -82,7 +86,7 @@ const Comment = (props) => {
 						</Box>
 					</Box>
 				</Box>
-				{authorId === 7 ? (
+				{authorId === authData.userId ? (
 					<IconButton aria-label='settings' onClick={handleClick}>
 						<MoreVertIcon />
 					</IconButton>

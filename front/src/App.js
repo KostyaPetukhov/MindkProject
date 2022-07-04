@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { Routes, Route } from 'react-router-dom';
 
 import Header from './components/Header';
@@ -18,12 +18,12 @@ function App() {
 		};
 	}, []);
 
-	// eslint-disable-next-line no-unused-vars
-	const [userData, setUserData] = useState({
+	const [authData, setAuthData] = useState({
 		isAuth: false,
-		user: null,
-		setUserData: () => {},
 	});
+
+	const contextValue = useMemo(() => ({ authData, setAuthData }), [authData]);
+	console.log('context', contextValue);
 
 	const routes = [
 		{
@@ -51,7 +51,7 @@ function App() {
 
 	return (
 		<div className='App'>
-			<authContext.Provider value={userData}>
+			<authContext.Provider value={contextValue}>
 				<ErrorBoundary>
 					<Header />
 				</ErrorBoundary>
