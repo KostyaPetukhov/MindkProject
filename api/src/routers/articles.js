@@ -134,16 +134,16 @@ router.put(
 
 router.delete(
 	'/:id',
-	// authMiddleware,
-	// aclMiddleware([
-	// 	{
-	// 		resource: aclConfig.Resources.ARTICLE,
-	// 		action: aclConfig.Action.DELETE,
-	// 		possesion: aclConfig.Possesion.OWN,
-	// 		getResource: (req) => articlesService.getArticle(req.params.id),
-	// 		isOwn: (resource, userId) => resource.userid === userId,
-	// 	},
-	// ]),
+	authMiddleware,
+	aclMiddleware([
+		{
+			resource: aclConfig.Resources.ARTICLE,
+			action: aclConfig.Action.DELETE,
+			possesion: aclConfig.Possesion.OWN,
+			getResource: (req) => articlesService.getArticle(req.params.id),
+			isOwn: (resource, userId) => resource.userid === userId,
+		},
+	]),
 	asyncErrorHandler(async (req, res) => {
 		const id = req.params.id;
 
