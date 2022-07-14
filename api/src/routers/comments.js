@@ -4,6 +4,7 @@ const asyncErrorHandler = require('../middleware/asyncErrorHandler');
 const authMiddleware = require('../middleware/auth');
 const aclMiddleware = require('../middleware/acl');
 const aclConfig = require('../services/acl.config');
+const validateMiddleware = require('../middleware/validateMiddleware');
 
 router.get(
 	'/',
@@ -38,6 +39,13 @@ router.get(
 router.post(
 	'/',
 	authMiddleware,
+	validateMiddleware({
+		id: { required: true },
+		userid: { requred: true },
+		articleid: { requred: true },
+		commenttitle: { min: 2, max: 255, required: true },
+		commentcreatedat: { required: true },
+	}),
 	asyncErrorHandler(async (req, res) => {
 		const commentData = req.body;
 		const userid = req.auth.id;
@@ -66,6 +74,13 @@ router.put(
 			isOwn: (resource, userId) => resource.userid === userId,
 		},
 	]),
+	validateMiddleware({
+		id: { required: true },
+		userid: { requred: true },
+		articleid: { requred: true },
+		commenttitle: { min: 2, max: 255, required: true },
+		commentcreatedat: { required: true },
+	}),
 	asyncErrorHandler(async (req, res) => {
 		const id = req.params.id;
 		const comment = req.body;

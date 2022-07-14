@@ -6,6 +6,7 @@ const userService = require('../services/store/users.service');
 const authMiddleware = require('../middleware/auth');
 const aclMiddleware = require('../middleware/acl');
 const aclConfig = require('../services/acl.config');
+const validateMiddleware = require('../middleware/validateMiddleware');
 
 router.get(
 	'/',
@@ -81,6 +82,28 @@ router.post(
 router.post(
 	'/',
 	authMiddleware,
+	validateMiddleware(
+		{
+			id: { requred: true },
+			email: { email: true, unique: true },
+			phone: {
+				regex: /^\+[0-9]{3}\d{9}$/g,
+				required: true,
+				unique: true,
+			},
+			username: { min: 2, max: 255, required: true },
+		},
+		{
+			email: {
+				tableName: 'users',
+				fieldName: 'email',
+			},
+			phone: {
+				tableName: 'users',
+				fieldName: 'phone',
+			},
+		}
+	),
 	asyncErrorHandler(async (req, res) => {
 		const userProfile = req.body;
 
@@ -105,6 +128,30 @@ router.put(
 			isOwn: (resource, userId) => resource.id === userId,
 		},
 	]),
+	validateMiddleware(
+		{
+			id: { requred: true },
+			email: { email: true, unique: true },
+			phone: {
+				regex: /^\+[0-9]{3}\d{9}$/g,
+				unique: true,
+				required: true,
+			},
+			username: { min: 2, max: 255, required: true },
+		},
+		{
+			email: {
+				tableName: 'users',
+				fieldName: 'email',
+				id: 'id',
+			},
+			phone: {
+				tableName: 'users',
+				fieldName: 'phone',
+				id: 'id',
+			},
+		}
+	),
 	asyncErrorHandler(async (req, res) => {
 		const id = req.auth.id;
 		const userProfile = req.body;

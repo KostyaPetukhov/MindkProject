@@ -12,6 +12,9 @@ module.exports = {
 	getUserByEmail: async (email) =>
 		db.select().first().where({ email }).from('users'),
 
+	getUserByPhone: async (phone) =>
+		db.select().first().where({ phone }).from('users'),
+
 	getUserLikes: async (userid) =>
 		db('likes as l')
 			.select('l.id', 'l.articleid', 'l.userid')
