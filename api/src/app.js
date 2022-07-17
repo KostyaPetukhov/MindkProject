@@ -12,8 +12,8 @@ const commentsRoutes = require('./routers/comments');
 const likesRoutes = require('./routers/likes');
 const universRoutes = require('./routers/universities');
 const authRoutes = require('./routers/auth');
-const loggerMiddleware = require('./middleware/logger');
-const errorHandler = require('./middleware/errorHandler');
+const loggerMiddleware = require('./middleware/loggerMiddleware');
+const errorHandler = require('./middleware/errorMiddleware');
 require('./domain/google.strategy');
 require('./domain/facebook.strategy');
 

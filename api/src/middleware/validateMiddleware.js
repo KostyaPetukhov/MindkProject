@@ -1,11 +1,6 @@
-/* eslint-disable max-len */
-/* eslint-disable default-case */
-/* eslint-disable radix */
-/* eslint-disable no-case-declarations */
 const UnprocessableEntityException = require('../errors/UnprocessableEntityException');
 const db = require('../services/db');
 
-// eslint-disable-next-line consistent-return
 module.exports = (validationRules, params) => async (req, res, next) => {
 	const errors = {};
 
@@ -22,30 +17,37 @@ module.exports = (validationRules, params) => async (req, res, next) => {
 						fieldErrors.push('This is required field');
 					}
 					break;
-				case 'email':
+				case 'email': {
 					const validEmail =
-						/^(([^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/iu;
+						/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
 					if (!validEmail.test(req.body[field])) {
 						fieldErrors.push('This is not valid email');
 					}
 					break;
+				}
 				case 'min':
-					const minValue = parseInt(ruleParam);
-					if (req.body[field] && req.body[field].length < minValue) {
-						fieldErrors.push(
-							`This field  minimum length = ${minValue}`
-						);
+					{
+						const minValue = parseInt(ruleParam, 10);
+						if (
+							req.body[field] &&
+							req.body[field].length < minValue
+						) {
+							fieldErrors.push(
+								`This field  minimum length = ${minValue}`
+							);
+						}
 					}
 					break;
-				case 'max':
-					const maxValue = parseInt(ruleParam);
+				case 'max': {
+					const maxValue = parseInt(ruleParam, 10);
 					if (req.body[field] && req.body[field].length > maxValue) {
 						fieldErrors.push(
 							`This field  maximum length = ${maxValue}`
 						);
 					}
 					break;
-				case 'unique':
+				}
+				case 'unique': {
 					let originalResource;
 					if (params[field].id) {
 						originalResource = await db
@@ -67,6 +69,7 @@ module.exports = (validationRules, params) => async (req, res, next) => {
 						fieldErrors.push('This field must be unique');
 					}
 					break;
+				}
 				case 'regex':
 					if (!req.body[field].match(ruleParam)) {
 						fieldErrors.push(
@@ -75,6 +78,7 @@ module.exports = (validationRules, params) => async (req, res, next) => {
 					}
 
 					break;
+				// no default
 			}
 
 			console.log(rule);
@@ -89,5 +93,5 @@ module.exports = (validationRules, params) => async (req, res, next) => {
 		return next();
 	}
 
-	next(new UnprocessableEntityException(errors));
+	return next(new UnprocessableEntityException(errors));
 };

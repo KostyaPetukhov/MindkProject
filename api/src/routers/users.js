@@ -1,10 +1,10 @@
 const router = require('express').Router();
 const path = require('path');
-const fileMiddleware = require('../middleware/file');
+const fileMiddleware = require('../middleware/fileMiddleware');
 const asyncErrorHandler = require('../middleware/asyncErrorHandler');
 const userService = require('../services/store/users.service');
-const authMiddleware = require('../middleware/auth');
-const aclMiddleware = require('../middleware/acl');
+const authMiddleware = require('../middleware/authMiddleware');
+const aclMiddleware = require('../middleware/aclMiddleware');
 const aclConfig = require('../services/acl.config');
 const validateMiddleware = require('../middleware/validateMiddleware');
 

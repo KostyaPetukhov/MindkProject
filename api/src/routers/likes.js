@@ -1,7 +1,7 @@
 const router = require('express').Router();
 const likesServices = require('../services/store/likes.services');
 const asyncErrorHandler = require('../middleware/asyncErrorHandler');
-const authMiddleware = require('../middleware/auth');
+const authMiddleware = require('../middleware/authMiddleware');
 
 router.get(
 	'/',

@@ -1,8 +1,8 @@
 const router = require('express').Router();
 const articlesService = require('../services/store/articles.service');
 const asyncErrorHandler = require('../middleware/asyncErrorHandler');
-const authMiddleware = require('../middleware/auth');
-const aclMiddleware = require('../middleware/acl');
+const authMiddleware = require('../middleware/authMiddleware');
+const aclMiddleware = require('../middleware/aclMiddleware');
 const aclConfig = require('../services/acl.config');
 const validateMiddleware = require('../middleware/validateMiddleware');
 

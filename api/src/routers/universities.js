@@ -1,7 +1,7 @@
 const router = require('express').Router();
 const universityServices = require('../services/store/universities.services');
 const asyncErrorHandler = require('../middleware/asyncErrorHandler');
-const authMiddleware = require('../middleware/auth');
+const authMiddleware = require('../middleware/authMiddleware');
 
 router.get(
 	'/',
