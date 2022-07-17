@@ -41,8 +41,8 @@ router.post(
 	authMiddleware,
 	validateMiddleware({
 		id: { required: true },
-		userid: { requred: true },
-		articleid: { requred: true },
+		userid: { required: true },
+		articleid: { required: true },
 		commenttitle: { min: 2, max: 255, required: true },
 		commentcreatedat: { required: true },
 	}),
@@ -76,8 +76,8 @@ router.put(
 	]),
 	validateMiddleware({
 		id: { required: true },
-		userid: { requred: true },
-		articleid: { requred: true },
+		userid: { required: true },
+		articleid: { required: true },
 		commenttitle: { min: 2, max: 255, required: true },
 		commentcreatedat: { required: true },
 	}),

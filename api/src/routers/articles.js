@@ -73,7 +73,7 @@ router.post(
 	validateMiddleware({
 		id: { required: true },
 		articletitle: { min: 2, required: true },
-		userid: { requred: true },
+		userid: { required: true },
 		articlecreatedat: { required: true },
 		visibility: {
 			required: true,
@@ -112,7 +112,7 @@ router.put(
 	validateMiddleware({
 		id: { required: true },
 		articletitle: { min: 2, required: true },
-		userid: { requred: true },
+		userid: { required: true },
 		articlecreatedat: { required: true },
 		visibility: {
 			regex: /All|Friends|Only me/,
