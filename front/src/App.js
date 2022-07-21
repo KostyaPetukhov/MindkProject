@@ -48,37 +48,21 @@ function App() {
 							element={<Navigate to='/articles' replace />}
 						/>
 						<Route
-							path='/articles'
-							element={
-								<ProtectedRoute auth={authData.isAuth}>
-									<ArticlesContainer />
-								</ProtectedRoute>
-							}
-						/>
-						<Route
-							path='/users'
-							element={
-								<ProtectedRoute auth={authData.isAuth}>
-									<UsersContainer />
-								</ProtectedRoute>
-							}
-						/>
-						<Route
-							path='/users/:id'
-							element={
-								<ProtectedRoute auth={authData.isAuth}>
-									<UserProfileContainer />
-								</ProtectedRoute>
-							}
-						/>
-						<Route
-							path='/login'
-							element={
-								<GuestRoute auth={authData.isAuth}>
-									<GuestPage />
-								</GuestRoute>
-							}
-						/>
+							element={<ProtectedRoute auth={authData.isAuth} />}
+						>
+							<Route
+								path='/articles'
+								element={<ArticlesContainer />}
+							/>
+							<Route path='/users' element={<UsersContainer />} />
+							<Route
+								path='/users/:id'
+								element={<UserProfileContainer />}
+							/>
+						</Route>
+						<Route element={<GuestRoute auth={authData.isAuth} />}>
+							<Route path='/login' element={<GuestPage />} />
+						</Route>
 						<Route path='*' element={<PageNotFound />} />
 					</Routes>
 				</ErrorBoundary>

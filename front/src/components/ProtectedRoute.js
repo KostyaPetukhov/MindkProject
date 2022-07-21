@@ -1,18 +1,17 @@
 import React from 'react';
-import { Navigate } from 'react-router-dom';
+import { Navigate, Outlet } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 const ProtectedRoute = (props) => {
-	const { auth, children } = props;
+	const { auth } = props;
 
 	if (!auth) {
 		return <Navigate to='/login' replace />;
 	}
-	return children;
+	return <Outlet />;
 };
 
 ProtectedRoute.propTypes = {
-	children: PropTypes.node,
 	auth: PropTypes.bool,
 };
 
