@@ -72,6 +72,11 @@ const Header = () => {
 
 	const handleCloseModal = () => setOpenModal(false);
 
+	const handleLogout = () => {
+		context.setAuthData({ isAuth: false });
+		localStorage.removeItem('auth');
+	};
+
 	return (
 		<AppBar position='fixed'>
 			<Container>
@@ -124,10 +129,10 @@ const Header = () => {
 										Profile
 									</MenuItem>
 								</Link>
-								<Link to='/'>
+								<Link to='/login'>
 									<MenuItem
 										className={classes.logoutItem}
-										onClick={handleClosePopover}
+										onClick={handleLogout}
 									>
 										<LogoutIcon className={classes.icons} />
 										Logout
