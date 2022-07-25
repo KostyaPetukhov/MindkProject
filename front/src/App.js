@@ -1,5 +1,8 @@
 import React, { useState, useEffect, useMemo } from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, Navigate } from 'react-router-dom';
+
+import ProtectedRoute from './components/ProtectedRoute';
+import GuestRoute from './components/GuestRoute';
 
 import Header from './components/Header';
 import ArticlesContainer from './containers/Articles';
@@ -18,59 +21,51 @@ function App() {
 		};
 	}, []);
 
-	const [authData, setAuthData] = useState({
-		isAuth: false,
-	});
+	const [authData, setAuthData] = useState({ isAuth: false });
+	const localStorageData = JSON.parse(localStorage.getItem('auth'));
+
+	useEffect(() => {
+		if (localStorageData) {
+			setAuthData({
+				isAuth: localStorageData.isAuth,
+				userId: localStorageData.user.id,
+				userName: localStorageData.user.username,
+				userAvatar: localStorageData.user.avatar,
+			});
+		}
+	}, []);
 
 	const contextValue = useMemo(() => ({ authData, setAuthData }), [authData]);
-	console.log('context', contextValue);
-
-	const routes = [
-		{
-			path: '/',
-			component: GuestPage,
-		},
-
-		{
-			path: '/articles',
-			component: ArticlesContainer,
-		},
-		{
-			path: '/users',
-			component: UsersContainer,
-		},
-		{
-			path: '/users/:id',
-			component: UserProfileContainer,
-		},
-		{
-			path: '*',
-			component: PageNotFound,
-		},
-	];
 
 	return (
 		<div className='App'>
 			<authContext.Provider value={contextValue}>
 				<ErrorBoundary>
 					<Header />
-				</ErrorBoundary>
-				<Routes>
-					{routes.map((item, index) => {
-						const Component = item.component;
-						return (
+					<Routes>
+						<Route
+							path='/'
+							element={<Navigate to='/articles' replace />}
+						/>
+						<Route
+							element={<ProtectedRoute auth={authData.isAuth} />}
+						>
 							<Route
-								key={index}
-								path={item.path}
-								element={
-									<ErrorBoundary>
-										<Component />
-									</ErrorBoundary>
-								}
+								path='/articles'
+								element={<ArticlesContainer />}
 							/>
-						);
-					})}
-				</Routes>
+							<Route path='/users' element={<UsersContainer />} />
+							<Route
+								path='/users/:id'
+								element={<UserProfileContainer />}
+							/>
+						</Route>
+						<Route element={<GuestRoute auth={authData.isAuth} />}>
+							<Route path='/login' element={<GuestPage />} />
+						</Route>
+						<Route path='*' element={<PageNotFound />} />
+					</Routes>
+				</ErrorBoundary>
 			</authContext.Provider>
 		</div>
 	);

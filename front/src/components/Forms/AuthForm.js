@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback, useContext } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Navigate } from 'react-router-dom';
 import GoogleLogin from 'react-google-login';
 import FacebookLogin from 'react-facebook-login';
@@ -8,7 +8,6 @@ import { googleClientId } from '../../config/config';
 import { facebookClientId } from '../../config/config';
 import { Grid, Typography } from '@mui/material';
 import { makeStyles } from '@material-ui/styles';
-import authContext from '../../authContext';
 
 const useStyles = makeStyles(() => ({
 	root: {
@@ -46,17 +45,7 @@ const parseJwt = (token) => {
 
 const AuthForm = () => {
 	const [auth, setAuth] = useState({});
-	// хранить данные в контексте, этот стейт не нужен
 	const classes = useStyles();
-	// eslint-disable-next-line no-unused-vars
-	const { authData, setAuthData } = useContext(authContext);
-	const changeContext = () =>
-		setAuthData({
-			isAuth: auth.isAuth,
-			userId: auth.userId,
-			userName: auth.username,
-			userAvatar: auth.avatar,
-		});
 
 	useEffect(() => {
 		const localStorageAuth = localStorage.getItem('auth');
@@ -75,9 +64,6 @@ const AuthForm = () => {
 					accessToken: response.data.accessToken,
 					refreshToken: response.data.refreshToken,
 					isAuth: true,
-					userId: response.data.userId,
-					username: response.data.username,
-					avatar: response.data.avatar,
 					user: parseJwt(response.data.accessToken),
 				});
 			})
@@ -95,6 +81,7 @@ const AuthForm = () => {
 				setAuth({
 					accessToken: response.data.accessToken,
 					refreshToken: response.data.refreshToken,
+					isAuth: true,
 					user: parseJwt(response.data.accessToken),
 				});
 			})
@@ -103,7 +90,7 @@ const AuthForm = () => {
 			});
 	});
 
-	if (!auth.userId) {
+	if (!auth.user) {
 		return (
 			<>
 				<Grid
@@ -157,12 +144,13 @@ const AuthForm = () => {
 				</Grid>
 			</>
 		);
+	} else {
+		localStorage.setItem('auth', JSON.stringify(auth));
 	}
 
 	return (
 		<>
-			{changeContext()}
-			<Navigate to='/articles' replace={true} />
+			<Navigate to='/articles' replace />
 		</>
 	);
 };
